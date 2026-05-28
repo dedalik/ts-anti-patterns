@@ -13,8 +13,8 @@ Before a PR:
 ```bash
 npm run lint
 npm run typecheck
-npm test
 npm run build
+npm test
 node dist/cli.js ./src --threshold 30
 ```
 
