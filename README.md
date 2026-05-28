@@ -245,52 +245,6 @@ policy chooses how to score them:
 - **`sarif`** - SARIF 2.1.0 for GitHub Code Scanning.
 - **`pr-comment`** - markdown with `<!-- ts-crap-report -->` marker so a bot can update the same comment in place. With `--baseline`, regressions go on top.
 
-## Publishing to npm (maintainers)
-
-Releases use [`.github/workflows/publish.yml`](./.github/workflows/publish.yml) with **Trusted Publishing (OIDC)**. npm no longer offers Classic "Automation" tokens; granular tokens usually need a one-time password in CI (`EOTP`) unless your account still has bypass-2FA on the token.
-
-### Step 1 - First publish (local, package does not exist on npm yet)
-
-OIDC cannot create a **new** package name. Publish once from your machine:
-
-```bash
-cd /path/to/ts-crap
-npm login          # browser or CLI; use passkey / 2FA as npm asks
-npm run build
-npm publish --access public
-```
-
-Do not use `--provenance` locally (only works in GitHub Actions). CI adds `--provenance` in the publish workflow.
-
-npm will ask for a **one-time code** from your authenticator - that is normal on your laptop, not in GitHub Actions.
-
-Check: https://www.npmjs.com/package/ts-crap
-
-### Step 2 - Trusted Publisher (for GitHub Actions, no token)
-
-1. https://www.npmjs.com/package/ts-crap/access (or package **Settings** → **Trusted Publisher**)
-2. **GitHub Actions**
-3. Repository: `dedalik/ts-crap`
-4. Workflow filename: `publish.yml`
-5. Environment: leave empty (unless you add a GitHub Environment later)
-6. Save
-
-Delete GitHub secret **`CRAP_TOKEN`** if you added one - a bad token makes npm ask for `EOTP` instead of using OIDC.
-
-### Step 3 - Releases from CI
-
-**Release a version**
-
-1. Bump `version` in `package.json` (and commit).
-2. Tag and push (tag must match version, e.g. `1.0.0` → `v1.0.0`):
-
-```bash
-git tag v1.0.0
-git push origin v1.0.0
-```
-
-CI runs tests, build, then `npm publish --provenance`. You can also trigger **Publish to npm** manually from the Actions tab (`workflow_dispatch`).
-
 ## Documentation Index
 
 - [`docs/architecture.md`](./docs/architecture.md) - architecture and design decisions.
@@ -332,16 +286,6 @@ For complete workflows, copy examples from [`examples/`](./examples/).
 | `info` | ≤ threshold | "borderline, watch it" |
 | `warning` | ≤ 2 × threshold | triggers `--fail-above` |
 | `error` | > 2 × threshold | triggers `--fail-above` |
-
-## In-source Pragmas
-
-```ts
-// ts-crap-ignore "legacy code, will rewrite in Q2"
-function suppressed() { /* ... */ }
-
-// ts-crap-threshold 60
-function localOverride() { /* ... */ }
-```
 
 ## Config File
 
