@@ -1,9 +1,9 @@
 name: Publish to npm
 
 # Publishes when you push a version tag (e.g. v1.0.0). Tag must match package.json.
-# One-time setup: add CRAP_TOKEN (npm Automation token) at
-#   https://github.com/dedalik/ts-crap/settings/secrets/actions
-# Optional: enable npm trusted publishing for this repo (OIDC) on npmjs.com.
+# First release: publish once locally (`npm login` + `npm publish`), then configure Trusted
+# Publisher on npm for dedalik/ts-crap / workflow publish.yml. Remove CRAP_TOKEN if set.
+# npm Classic tokens are gone; granular tokens often require OTP (EOTP) in CI unless bypass is enabled.
 
 on:
   push:
@@ -22,12 +22,15 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Use Node.js 22
+      - name: Use Node.js 24
         uses: actions/setup-node@v4
         with:
-          node-version: "22"
+          node-version: "24"
           registry-url: https://registry.npmjs.org
           cache: npm
+
+      - name: Ensure npm supports OIDC trusted publishing
+        run: npm install -g npm@11
 
       - name: Install dependencies
         run: npm ci
@@ -56,7 +59,9 @@ jobs:
           fi
           echo "Publishing version $PKG (tag $TAG)"
 
+      # No CRAP_TOKEN: uses npm Trusted Publishing (OIDC) when configured on the package.
+      # If you still use a granular token, set CRAP_TOKEN and uncomment NODE_AUTH_TOKEN below.
       - name: Publish to npm
         run: npm publish --provenance --access public
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.CRAP_TOKEN }}
+        # env:
+        #   NODE_AUTH_TOKEN: ${{ secrets.CRAP_TOKEN }}

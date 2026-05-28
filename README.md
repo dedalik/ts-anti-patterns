@@ -247,13 +247,37 @@ policy chooses how to score them:
 
 ## Publishing to npm (maintainers)
 
-Releases are automated via [`.github/workflows/publish.yml`](./.github/workflows/publish.yml).
+Releases use [`.github/workflows/publish.yml`](./.github/workflows/publish.yml) with **Trusted Publishing (OIDC)**. npm no longer offers Classic "Automation" tokens; granular tokens usually need a one-time password in CI (`EOTP`) unless your account still has bypass-2FA on the token.
 
-**One-time setup**
+### Step 1 - First publish (local, package does not exist on npm yet)
 
-1. Create an npm account and add the package (`npm login` locally once if needed).
-2. In GitHub: **Settings → Secrets and variables → Actions** → add `CRAP_TOKEN` (npm **Automation** access token with publish rights).
-3. Optional: on [npmjs.com](https://www.npmjs.com/) enable **trusted publishing** / provenance for `dedalik/ts-crap` (matches `publishConfig.provenance` in `package.json`).
+OIDC cannot create a **new** package name. Publish once from your machine:
+
+```bash
+cd /path/to/ts-crap
+npm login          # browser or CLI; use passkey / 2FA as npm asks
+npm run build
+npm publish --access public
+```
+
+Do not use `--provenance` locally (only works in GitHub Actions). CI adds `--provenance` in the publish workflow.
+
+npm will ask for a **one-time code** from your authenticator - that is normal on your laptop, not in GitHub Actions.
+
+Check: https://www.npmjs.com/package/ts-crap
+
+### Step 2 - Trusted Publisher (for GitHub Actions, no token)
+
+1. https://www.npmjs.com/package/ts-crap/access (or package **Settings** → **Trusted Publisher**)
+2. **GitHub Actions**
+3. Repository: `dedalik/ts-crap`
+4. Workflow filename: `publish.yml`
+5. Environment: leave empty (unless you add a GitHub Environment later)
+6. Save
+
+Delete GitHub secret **`CRAP_TOKEN`** if you added one - a bad token makes npm ask for `EOTP` instead of using OIDC.
+
+### Step 3 - Releases from CI
 
 **Release a version**
 
