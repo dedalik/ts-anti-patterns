@@ -252,7 +252,7 @@ Releases are automated via [`.github/workflows/publish.yml`](./.github/workflows
 **One-time setup**
 
 1. Create an npm account and add the package (`npm login` locally once if needed).
-2. In GitHub: **Settings → Secrets and variables → Actions** → add `NPM_TOKEN` (npm **Automation** access token with publish rights).
+2. In GitHub: **Settings → Secrets and variables → Actions** → add `CRAP_TOKEN` (npm **Automation** access token with publish rights).
 3. Optional: on [npmjs.com](https://www.npmjs.com/) enable **trusted publishing** / provenance for `dedalik/ts-crap` (matches `publishConfig.provenance` in `package.json`).
 
 **Release a version**
