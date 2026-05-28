@@ -1,0 +1,61 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/dedalik/ts-crap/main/schemas/delta-v1.json",
+  "title": "ts-crap delta",
+  "description": "Per-function diff between two report-v1 envelopes, as emitted by `ts-crap --baseline ... --format json` (planned for 1.x). One row per matched/added/removed function plus an aggregate summary.",
+  "type": "object",
+  "required": ["$schema", "schemaVersion", "summary", "rows"],
+  "additionalProperties": false,
+  "properties": {
+    "$schema": { "type": "string", "format": "uri" },
+    "schemaVersion": {
+      "type": "string",
+      "pattern": "^1\\.\\d+\\.\\d+$"
+    },
+    "epsilon": {
+      "type": "number",
+      "minimum": 0,
+      "description": "Score delta threshold treated as `unchanged`."
+    },
+    "summary": { "$ref": "#/$defs/Summary" },
+    "rows": { "type": "array", "items": { "$ref": "#/$defs/Row" } }
+  },
+  "$defs": {
+    "Summary": {
+      "type": "object",
+      "required": ["unchanged", "improved", "regression", "new", "removed", "moved"],
+      "additionalProperties": false,
+      "properties": {
+        "unchanged": { "type": "integer", "minimum": 0 },
+        "improved": { "type": "integer", "minimum": 0 },
+        "regression": { "type": "integer", "minimum": 0 },
+        "new": { "type": "integer", "minimum": 0 },
+        "removed": { "type": "integer", "minimum": 0 },
+        "moved": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "Row": {
+      "type": "object",
+      "required": ["kind", "delta"],
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": ["unchanged", "improved", "regression", "new", "removed", "moved"]
+        },
+        "delta": {
+          "type": "number",
+          "description": "current.score - baseline.score (0 when one side is missing)."
+        },
+        "current": {
+          "$ref": "report-v1.json#/$defs/Entry",
+          "description": "Entry from the current run; absent when kind=removed."
+        },
+        "baseline": {
+          "$ref": "report-v1.json#/$defs/Entry",
+          "description": "Entry from the baseline run; absent when kind=new."
+        }
+      }
+    }
+  }
+}

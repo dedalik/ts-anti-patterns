@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>ts-crap report</title>
+  <style><!-- @@STYLES@@ --></style>
+</head>
+<body>
+  <main>
+    <header class="report-header">
+      <h1>ts-crap</h1>
+      <span class="mode-badge" id="mode-badge">mode</span>
+      <span class="cov-source" id="cov-source"></span>
+    </header>
+
+    <div class="summary" id="summary"></div>
+
+    <div class="layout">
+      <aside class="filters" aria-label="Filters">
+        <h2>Filters</h2>
+        <label>
+          Threshold
+          <input type="range" id="threshold" min="1" max="200" step="1" />
+          <div class="threshold-readout" id="threshold-readout"></div>
+        </label>
+        <label>
+          Search
+          <input type="search" id="search" placeholder="function or file..." aria-label="Search functions or files" />
+        </label>
+        <label class="toggle">
+          <input type="checkbox" id="t-above" /> only above threshold
+        </label>
+        <label class="toggle">
+          <input type="checkbox" id="t-trivial" /> hide trivial (score ≤ 1)
+        </label>
+        <label class="toggle">
+          <input type="checkbox" id="t-suppressed" /> only suppressed
+        </label>
+        <label class="toggle">
+          <input type="checkbox" id="t-no-cov" /> hide no-coverage rows
+        </label>
+        <div class="actions">
+          <button type="button" id="export-csv" aria-label="Export filtered rows to CSV">Export CSV</button>
+          <button type="button" id="reset" aria-label="Reset filters and sort">Reset</button>
+        </div>
+      </aside>
+
+      <section>
+        <table class="crap-table" id="crap-table" aria-label="Functions ranked by score">
+          <thead>
+            <tr id="thead-row"></tr>
+          </thead>
+          <tbody id="crap-rows"></tbody>
+        </table>
+      </section>
+    </div>
+
+    <footer class="report-footer" id="footer"></footer>
+  </main>
+
+  <dialog class="glossary" id="glossary">
+    <h3 id="glossary-title">Glossary</h3>
+    <div id="glossary-body"></div>
+    <form method="dialog"><button>Close</button></form>
+  </dialog>
+
+  <script id="data" type="application/json"><!-- @@DATA@@ --></script>
+  <script><!-- @@SCRIPT@@ --></script>
+</body>
+</html>

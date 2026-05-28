@@ -1,0 +1,148 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/dedalik/ts-crap/main/schemas/report-v1.json",
+  "title": "ts-crap report",
+  "description": "Versioned JSON envelope produced by `ts-crap --format json`. Stable for the lifetime of the 1.x schema family - additive changes only.",
+  "type": "object",
+  "required": ["$schema", "schemaVersion", "meta", "summary", "entries"],
+  "additionalProperties": false,
+  "properties": {
+    "$schema": {
+      "type": "string",
+      "format": "uri",
+      "description": "URL pointing at the schema document the report claims to conform to."
+    },
+    "schemaVersion": {
+      "type": "string",
+      "pattern": "^1\\.\\d+\\.\\d+$",
+      "description": "Semantic version of the report envelope. Breaking changes bump the major version (report-v2 would live at a different $id)."
+    },
+    "meta": { "$ref": "#/$defs/Meta" },
+    "summary": { "$ref": "#/$defs/Summary" },
+    "entries": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/Entry" },
+      "description": "All analysed functions, sorted by score descending and then by file/line for determinism."
+    }
+  },
+  "$defs": {
+    "Meta": {
+      "type": "object",
+      "required": ["version", "generatedAt", "node", "cwd", "command", "mode"],
+      "additionalProperties": true,
+      "properties": {
+        "version": { "type": "string", "description": "ts-crap version that produced the report." },
+        "generatedAt": { "type": "string", "format": "date-time" },
+        "node": { "type": "string", "description": "process.version of the producer." },
+        "cwd": { "type": "string" },
+        "command": { "type": "string", "description": "Full argv joined with spaces." },
+        "mode": { "type": "string", "enum": ["crap", "cc"] },
+        "coverageSource": {
+          "type": "object",
+          "properties": {
+            "path": { "type": "string" },
+            "kind": { "type": ["string", "null"], "enum": ["branch", "fn", "line", null] },
+            "hint": { "type": "string" }
+          },
+          "required": ["path"],
+          "additionalProperties": false
+        },
+        "configPath": { "type": "string" },
+        "configSha": { "type": "string" },
+        "stickyDelta": { "$ref": "#/$defs/DeltaSummary" }
+      }
+    },
+    "Summary": {
+      "type": "object",
+      "required": [
+        "coverageKnown",
+        "errors",
+        "functions",
+        "infos",
+        "mode",
+        "oks",
+        "threshold",
+        "warnings",
+        "worstScore"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "coverageKnown": { "type": "boolean" },
+        "errors": { "type": "integer", "minimum": 0 },
+        "functions": { "type": "integer", "minimum": 0 },
+        "infos": { "type": "integer", "minimum": 0 },
+        "mode": { "type": "string", "enum": ["crap", "cc"] },
+        "oks": { "type": "integer", "minimum": 0 },
+        "threshold": { "type": "number" },
+        "warnings": { "type": "integer", "minimum": 0 },
+        "worstScore": { "type": ["number", "null"] }
+      }
+    },
+    "Entry": {
+      "type": "object",
+      "required": [
+        "cognitive",
+        "complexity",
+        "confidence",
+        "coverage",
+        "coverageKind",
+        "endLine",
+        "file",
+        "function",
+        "hint",
+        "line",
+        "localThreshold",
+        "mode",
+        "score",
+        "severity",
+        "sloc",
+        "suppressed"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "cognitive": { "type": "integer", "minimum": 0 },
+        "complexity": { "type": "integer", "minimum": 1 },
+        "confidence": { "type": "string", "enum": ["exact", "range", "none"] },
+        "coverage": {
+          "type": ["number", "null"],
+          "minimum": 0,
+          "maximum": 100,
+          "description": "Percent in [0, 100], or null when the function has no coverage record."
+        },
+        "coverageKind": { "type": ["string", "null"], "enum": ["branch", "fn", "line", null] },
+        "endLine": { "type": "integer", "minimum": 1 },
+        "file": { "type": "string" },
+        "function": { "type": "string" },
+        "hint": { "type": ["string", "null"] },
+        "line": { "type": "integer", "minimum": 1 },
+        "localThreshold": {
+          "type": ["number", "null"],
+          "description": "Per-function threshold from `// ts-crap-threshold N`, or null."
+        },
+        "mode": { "type": "string", "enum": ["crap", "cc"] },
+        "score": { "type": "number", "minimum": 0 },
+        "severity": { "type": "string", "enum": ["ok", "info", "warning", "error"] },
+        "sloc": { "type": "integer", "minimum": 0 },
+        "suppressed": {
+          "type": ["object", "null"],
+          "properties": { "reason": { "type": "string" } },
+          "required": ["reason"],
+          "additionalProperties": false
+        }
+      }
+    },
+    "DeltaSummary": {
+      "type": "object",
+      "required": ["unchanged", "improved", "regression", "new", "removed", "moved"],
+      "additionalProperties": false,
+      "properties": {
+        "unchanged": { "type": "integer", "minimum": 0 },
+        "improved": { "type": "integer", "minimum": 0 },
+        "regression": { "type": "integer", "minimum": 0 },
+        "new": { "type": "integer", "minimum": 0 },
+        "removed": { "type": "integer", "minimum": 0 },
+        "moved": { "type": "integer", "minimum": 0 }
+      }
+    }
+  }
+}

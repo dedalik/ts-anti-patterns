@@ -1,0 +1,69 @@
+# Dependencies
+node_modules/
+.pnpm-store/
+.yarn/
+.npm/
+
+# Build output
+dist/
+build/
+out/
+*.tsbuildinfo
+
+# Coverage (test output at repo root only; src/coverage/ is real code)
+/coverage/
+*.lcov
+.nyc_output/
+# But never ignore committed coverage fixtures used by the test suite.
+!test/fixtures/coverage/*.lcov
+!test/fixtures/coverage/*.info
+
+# Test artifacts
+.vitest-cache/
+__snapshots__/__obsolete__/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Caches
+.cache/
+.parcel-cache/
+.turbo/
+.eslintcache
+.ts-crap-cache/
+
+# Git worktrees
+.worktrees/
+
+# Env files
+.env
+.env.local
+.env.*.local
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editors / IDEs
+.idea/
+.vscode/
+!.vscode/extensions.json
+!.vscode/settings.recommended.json
+*.swp
+*.swo
+*~
+
+# Local user files
+*.local
+.history/
+
+# Project-specific
+sample-report.html
+*.baseline.json
+!fixtures/**/*.baseline.json

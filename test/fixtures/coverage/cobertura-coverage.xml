@@ -1,0 +1,21 @@
+<?xml version="1.0" ?>
+<!DOCTYPE coverage SYSTEM "http://cobertura.sourceforge.net/xml/coverage-04.dtd">
+<coverage line-rate="0.58" branch-rate="0.48" timestamp="1700000000000" version="2.0">
+  <packages>
+    <package name="test.fixtures.tiny" line-rate="0.58" branch-rate="0.48">
+      <classes>
+        <class name="sample.ts" filename="test/fixtures/tiny/sample.ts" line-rate="0.58" branch-rate="0.48">
+          <methods/>
+          <lines>
+            <line number="4" hits="5" branch="false"/>
+            <line number="8" hits="3" branch="true" condition-coverage="50% (1/2)"/>
+            <line number="9" hits="2" branch="true" condition-coverage="100% (2/2)"/>
+            <line number="14" hits="1" branch="false"/>
+            <line number="44" hits="3" branch="false"/>
+            <line number="45" hits="2" branch="true" condition-coverage="50% (1/2)"/>
+          </lines>
+        </class>
+      </classes>
+    </package>
+  </packages>
+</coverage>

@@ -1,0 +1,102 @@
+{
+  "name": "ts-crap",
+  "version": "1.0.0",
+  "description": "CRAP (Change Risk Anti-Patterns) for TypeScript/JavaScript - inspired by minikin/cargo-crap",
+  "type": "module",
+  "license": "MIT",
+  "author": "Radiks Alijevs <dedalik@gmail.com>",
+  "homepage": "https://github.com/dedalik/ts-crap",
+  "bugs": {
+    "url": "https://github.com/dedalik/ts-crap/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dedalik/ts-crap.git"
+  },
+  "keywords": [
+    "crap",
+    "cyclomatic-complexity",
+    "code-quality",
+    "code-coverage",
+    "lcov",
+    "typescript",
+    "javascript",
+    "static-analysis",
+    "metrics",
+    "ci"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "bin": {
+    "ts-crap": "./dist/cli.js"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist/**/*.js",
+    "dist/**/*.d.ts",
+    "dist/**/*.d.ts.map",
+    "dist/**/*.md",
+    "dist/**/*.html",
+    "dist/**/*.css",
+    "schemas/*.json",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json && node scripts/copy-assets.mjs && chmod +x dist/cli.js 2>/dev/null || true",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "self:crap": "npm run build && npm run test:coverage && node dist/cli.js ./src --format html --output crap-self-report.html",
+    "self:crap:no-cov": "npm run build && node dist/cli.js ./src --no-cov --format html --output crap-self-report.html",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "prepack": "npm run build",
+    "start": "node dist/cli.js"
+  },
+  "dependencies": {
+    "@typescript-eslint/typescript-estree": "^8.0.0",
+    "cac": "^6.7.14",
+    "chokidar": "^5.0.0",
+    "cli-table3": "^0.6.5",
+    "cosmiconfig": "^9.0.0",
+    "fast-xml-parser": "^5.8.0",
+    "globby": "^14.0.2",
+    "ignore": "^6.0.2",
+    "p-limit": "^6.1.0",
+    "picocolors": "^1.0.0",
+    "source-map": "^0.7.6"
+  },
+  "devDependencies": {
+    "@types/jsdom": "^28.0.3",
+    "@types/node": "^22.0.0",
+    "@typescript-eslint/eslint-plugin": "^8.0.0",
+    "@typescript-eslint/parser": "^8.0.0",
+    "@vitest/coverage-v8": "^2.1.0",
+    "ajv": "^8.20.0",
+    "ajv-formats": "^3.0.1",
+    "eslint": "^9.0.0",
+    "fast-check": "^4.8.0",
+    "jsdom": "^29.1.1",
+    "prettier": "^3.3.0",
+    "tsup": "^8.3.0",
+    "typescript": "^5.5.0",
+    "typescript-eslint": "^8.0.0",
+    "vitest": "^2.1.0"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  }
+}

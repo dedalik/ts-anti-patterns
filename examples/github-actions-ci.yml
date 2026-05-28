@@ -1,0 +1,102 @@
+# Drop-in CI workflow: drop this into your repo at
+# .github/workflows/ts-crap.yml and you're done. It does three things:
+#
+#   1. Gates PRs on a CRAP threshold.
+#   2. Uploads SARIF to GitHub Code Scanning so problems show up inline in
+#      the PR diff and on the Security tab.
+#   3. Posts (and updates) a PR comment with the top regressions vs main.
+#
+# Adjust THRESHOLD, the coverage step, and the branch names for your repo.
+
+name: ts-crap
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+  pull-requests: write     # needed for the PR comment
+  security-events: write   # needed for SARIF upload
+
+jobs:
+  crap:
+    name: CRAP analysis
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2 # we want HEAD~1 for the baseline below
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+
+      - name: Install
+        run: npm ci
+
+      # Optional: generate coverage so ts-crap can compute full CRAP rather
+      # than CC-only. Skip this step if you don't have tests yet - ts-crap
+      # will degrade to complexity-only and still work.
+      - name: Test with coverage
+        run: npm test -- --coverage --coverage.reporter=lcov
+
+      - name: Install ts-crap
+        run: npm install -g ts-crap@^1.0.0
+
+      # --- Baseline: render main's report so we can diff against it -------
+      - name: Fetch baseline from main
+        if: github.event_name == 'pull_request'
+        run: |
+          git fetch origin ${{ github.base_ref }} --depth=1
+          git checkout origin/${{ github.base_ref }} -- src
+          ts-crap --format json --no-cov > /tmp/baseline.json
+          git checkout HEAD -- src
+
+      # --- Human report in the job log ------------------------------------
+      - name: Human report
+        run: ts-crap --threshold 30
+
+      # --- Gate: fail the job on a hard regression ------------------------
+      - name: Gate
+        run: |
+          ts-crap \
+            --threshold 30 \
+            --fail-above \
+            --baseline /tmp/baseline.json \
+            --fail-regression \
+            --epsilon 0.5
+
+      # --- SARIF for inline PR annotations + Security tab -----------------
+      - name: SARIF
+        if: always()
+        run: ts-crap --format sarif --output ts-crap.sarif
+
+      - name: Upload SARIF
+        if: always()
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: ts-crap.sarif
+          category: ts-crap
+
+      # --- PR comment with the top regressions ----------------------------
+      - name: PR comment
+        if: github.event_name == 'pull_request'
+        run: |
+          ts-crap \
+            --format pr-comment \
+            --baseline /tmp/baseline.json \
+            --output pr.md
+        continue-on-error: true
+
+      - name: Post or update the PR comment
+        if: github.event_name == 'pull_request' && hashFiles('pr.md') != ''
+        uses: marocchino/sticky-pull-request-comment@v2
+        with:
+          # The bot finds previous comments by this header so it updates the
+          # same one across pushes instead of spamming.
+          header: ts-crap
+          path: pr.md
