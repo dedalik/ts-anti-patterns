@@ -1,8 +1,8 @@
 # Architecture
 
-Technical overview for contributors and extenders. User-facing usage lives in [`README.md`](../README.md).
+Technical overview for contributors and extenders. User-facing usage lives in [`README.md`](../../README.md).
 
-Inspired by [`cargo-crap`](https://github.com/minikin/cargo-crap). Main difference: **ts-anti-patterns is useful without coverage** (CC-only by default).
+**ts-anti-patterns defaults to CC-only mode**, so it stays useful even when no coverage data is available. See [`cargo-crap`](https://github.com/minikin/cargo-crap) for the Rust counterpart.
 
 ## Goals and non-goals
 

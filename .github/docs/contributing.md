@@ -44,4 +44,4 @@ Schemas in `schemas/report-v1.json` and `schemas/delta-v1.json` are a public con
 4. `--baseline` + `--fail-regression` gates regressions.
 5. `npm pack --dry-run` includes `dist/` and `schemas/`.
 
-Publishing is automated via `.github/workflows/publish.yml` (tag `v*` must match `package.json` version). See README **Publishing to npm**.
+Publishing is automated via [`../workflows/publish.yml`](../workflows/publish.yml) (tag `v*` must match `package.json` version).

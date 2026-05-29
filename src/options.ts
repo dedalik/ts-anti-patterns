@@ -94,7 +94,7 @@ export interface ResolvedOptions {
   output?: string
   watch: boolean
 
-  // Quality knobs (see docs/architecture.md)
+  // Quality knobs (see .github/docs/architecture.md)
   useBranchCoverage: boolean
   sourceMap?: string | "auto"
   diagnose?: string

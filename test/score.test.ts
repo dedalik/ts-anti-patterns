@@ -25,7 +25,7 @@ describe("CRAP formula", () => {
     expect(computeCrap(5, 80)).toBeLessThan(computeCrap(10, 80))
   })
 
-  // Coverage + CRAP scoring (see docs/architecture.md).
+  // Coverage + CRAP scoring (see .github/docs/architecture.md).
   it("acceptance: CC=12, cov=0 → CRAP = 156.0", () => {
     expect(computeCrap(12, 0)).toBeCloseTo(156, 6)
   })

@@ -1,11 +1,5 @@
 # ts-anti-patterns
 
-> **Status: 1.0.0** - all 5 implementation phases shipped.
-> CC-only mode, full CRAP mode, HTML report, format parity
-> (markdown/github/sarif/pr-comment), baselines, diagnostics,
-> workspaces, watch mode, sticky local baseline, programmatic API.
-> See [`docs/architecture.md`](./docs/architecture.md) for design notes.
-
 The **CRAP** (Change Risk Anti-Patterns) metric for TypeScript and JavaScript projects.
 
 Combines cyclomatic complexity and test coverage into a single score that highlights functions that are both complex and poorly tested - where bugs love to hide.
@@ -247,8 +241,8 @@ policy chooses how to score them:
 
 ## Documentation Index
 
-- [`docs/architecture.md`](./docs/architecture.md) - architecture and design decisions.
-- [`docs/contributing.md`](./docs/contributing.md) - tests, PR checklist, release smoke.
+- [`.github/docs/architecture.md`](./.github/docs/architecture.md) - architecture and design decisions.
+- [`.github/docs/contributing.md`](./.github/docs/contributing.md) - tests, PR checklist, release smoke.
 - [`examples/github-actions-ci.yml`](./examples/github-actions-ci.yml) - CI gate + SARIF + PR comment.
 - [`examples/lefthook.yml`](./examples/lefthook.yml) - local pre-push gate.
 - [`schemas/report-v1.json`](./schemas/report-v1.json) - JSON report contract.
@@ -303,7 +297,7 @@ Discovered via cosmiconfig in this order: `.ts-anti-patterns.json`, `.ts-anti-pa
 
 CLI flags always override the config.
 
-Inspired by [cargo-crap](https://github.com/minikin/cargo-crap).
+[`cargo-crap`](https://github.com/minikin/cargo-crap) — Rust implementation of the CRAP metric.
 
 ## License
 
