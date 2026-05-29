@@ -1,6 +1,6 @@
 {
   "name": "ts-anti-patterns",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "CRAP (Change Risk Anti-Patterns) for TypeScript/JavaScript - inspired by minikin/cargo-crap",
   "type": "module",
   "license": "MIT",
