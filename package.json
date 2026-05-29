@@ -1,17 +1,17 @@
 {
-  "name": "ts-crap",
+  "name": "ts-anti-patterns",
   "version": "1.0.0",
   "description": "CRAP (Change Risk Anti-Patterns) for TypeScript/JavaScript - inspired by minikin/cargo-crap",
   "type": "module",
   "license": "MIT",
   "author": "Radiks Alijevs <dedalik@gmail.com>",
-  "homepage": "https://github.com/dedalik/ts-crap",
+  "homepage": "https://github.com/dedalik/ts-anti-patterns",
   "bugs": {
-    "url": "https://github.com/dedalik/ts-crap/issues"
+    "url": "https://github.com/dedalik/ts-anti-patterns/issues"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/dedalik/ts-crap.git"
+    "url": "https://github.com/dedalik/ts-anti-patterns.git"
   },
   "keywords": [
     "crap",
@@ -29,7 +29,7 @@
     "node": ">=18"
   },
   "bin": {
-    "ts-crap": "./dist/cli.js"
+    "ts-anti-patterns": "./dist/cli.js"
   },
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",

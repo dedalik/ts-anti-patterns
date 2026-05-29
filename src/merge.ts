@@ -3,7 +3,7 @@
 // the test runner's CWD - different from ours).
 //
 // The CRITICAL invariant: relative LCOV paths are NEVER resolved against
-// ts-crap's own CWD. We only join via component-level suffix matching. This
+// ts-anti-patterns's own CWD. We only join via component-level suffix matching. This
 // keeps the tool correct when run from a different directory than the
 // project root (e.g., a monorepo, a CI script that cd's, an editor plugin).
 //

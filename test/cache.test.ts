@@ -25,7 +25,7 @@ function mkMetric(over: Partial<FunctionMetric> = {}): FunctionMetric {
   }
 }
 
-const root = mkdtempSync(join(tmpdir(), "ts-crap-cache-"))
+const root = mkdtempSync(join(tmpdir(), "ts-anti-patterns-cache-"))
 afterAll(() => rmSync(root, { recursive: true, force: true }))
 
 describe("openCache()", () => {

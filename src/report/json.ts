@@ -6,7 +6,7 @@ import { sortEntries } from "./human.js"
 
 export const REPORT_SCHEMA_VERSION = "1.0.0"
 export const REPORT_SCHEMA_URL =
-  "https://raw.githubusercontent.com/dedalik/ts-crap/main/schemas/report-v1.json"
+  "https://raw.githubusercontent.com/dedalik/ts-anti-patterns/main/schemas/report-v1.json"
 
 export interface JsonReportEnvelope {
   $schema: string

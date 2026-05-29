@@ -2,17 +2,17 @@
 
 Technical overview for contributors and extenders. User-facing usage lives in [`README.md`](../README.md).
 
-Inspired by [`cargo-crap`](https://github.com/minikin/cargo-crap). Main difference: **ts-crap is useful without coverage** (CC-only by default).
+Inspired by [`cargo-crap`](https://github.com/minikin/cargo-crap). Main difference: **ts-anti-patterns is useful without coverage** (CC-only by default).
 
 ## Goals and non-goals
 
 ### Goals
 
-- One npm package: `npm i -g ts-crap` or `npx ts-crap@latest`.
+- One npm package: `npm i -g ts-anti-patterns` or `npx ts-anti-patterns@latest`.
 - Zero-arg run without LCOV is useful on any TS/JS project.
 - When coverage exists (LCOV, Istanbul JSON, Clover, Cobertura), upgrade to full CRAP scoring.
 - Rich HTML report and format parity with cargo-crap where it makes sense.
-- CLI and library (`import { analyze } from "ts-crap"`).
+- CLI and library (`import { analyze } from "ts-anti-patterns"`).
 
 ### Non-goals
 
@@ -25,14 +25,14 @@ Inspired by [`cargo-crap`](https://github.com/minikin/cargo-crap). Main differen
 
 | Command | Behavior |
 |---|---|
-| `ts-crap` | Scan `./src` (or `.` if no `src`). CC-only by default. |
-| `ts-crap --cov` | Auto-detect `coverage/*` and score CRAP. |
-| `ts-crap --full` | Generate coverage (best effort), then CRAP. |
-| `ts-crap ./src` | Explicit root. |
-| `ts-crap --no-cov` | Force CC-only, ignore coverage. |
-| `ts-crap --lcov F` | Require file `F`; exit 2 if missing. |
-| `ts-crap --format html` | Change output format. |
-| `ts-crap --fail-above` | CI gate on final score (CC or CRAP). |
+| `ts-anti-patterns` | Scan `./src` (or `.` if no `src`). CC-only by default. |
+| `ts-anti-patterns --cov` | Auto-detect `coverage/*` and score CRAP. |
+| `ts-anti-patterns --full` | Generate coverage (best effort), then CRAP. |
+| `ts-anti-patterns ./src` | Explicit root. |
+| `ts-anti-patterns --no-cov` | Force CC-only, ignore coverage. |
+| `ts-anti-patterns --lcov F` | Require file `F`; exit 2 if missing. |
+| `ts-anti-patterns --format html` | Change output format. |
+| `ts-anti-patterns --fail-above` | CI gate on final score (CC or CRAP). |
 
 `threshold` gates the **final score** (CRAP when coverage is active, else CC). In CC-only mode, hide Coverage/Conf columns; header shows `mode: complexity-only`.
 
@@ -46,16 +46,16 @@ Inspired by [`cargo-crap`](https://github.com/minikin/cargo-crap). Main differen
 6. **Class-qualified names** (`UserCard.render`, `Cache#size`, `<arrow@42>`).
 7. **Severity** bands in SARIF, GitHub, HTML, PR comment.
 8. **Actionable hints** - deterministic rules, no LLM.
-9. **In-source pragmas** - `// ts-crap-ignore`, `// ts-crap-threshold N`.
+9. **In-source pragmas** - `// ts-anti-patterns-ignore`, `// ts-anti-patterns-threshold N`.
 10. **Reproducibility footer** + `--diagnose`.
 11. **HTML threshold slider**, glossary popovers, CSV export, dark mode.
-12. **`ts-crap explain`** matches HTML glossary.
+12. **`ts-anti-patterns explain`** matches HTML glossary.
 13. **Stable sort** and canonical JSON keys for baselines.
 
 ## Repository layout
 
 ```
-ts-crap/
+ts-anti-patterns/
 ├── src/
 │   ├── cli.ts              # CLI entry
 │   ├── index.ts            # programmatic API
@@ -102,7 +102,7 @@ Features: sortable table, threshold slider, search, toggles (above threshold, tr
 
 ## cargo-crap parity
 
-| Feature | ts-crap |
+| Feature | ts-anti-patterns |
 |---|---|
 | `--lcov` | yes + auto-detect via `--cov` |
 | `--threshold`, `--top`, `--min` | yes (default `--top 20`) |
@@ -111,9 +111,9 @@ Features: sortable table, threshold slider, search, toggles (above threshold, tr
 | Formats human/json/markdown/github/sarif/pr-comment/html | yes |
 | `--baseline`, `--fail-regression` | yes |
 | `--workspace`, `--watch`, `--jobs` | yes |
-| Cognitive, SLOC, branch coverage, source maps | ts-crap only |
-| Confidence, severity, hints, pragmas, diagnose, explain, init | ts-crap only |
-| One-command `--full` | ts-crap only |
+| Cognitive, SLOC, branch coverage, source maps | ts-anti-patterns only |
+| Confidence, severity, hints, pragmas, diagnose, explain, init | ts-anti-patterns only |
+| One-command `--full` | ts-anti-patterns only |
 
 ## Defaults
 
@@ -126,7 +126,7 @@ Features: sortable table, threshold slider, search, toggles (above threshold, tr
 | Top rows | 20 |
 | Branch coverage | use when BRDA present |
 | Cognitive / hints | on (`--no-cognitive`, `--no-hints` to disable) |
-| Config | cosmiconfig: `.ts-crap.json`, etc. |
+| Config | cosmiconfig: `.ts-anti-patterns.json`, etc. |
 | Node | >= 18 |
 
 ## Edge cases

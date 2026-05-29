@@ -1,4 +1,4 @@
-# ts-crap
+# ts-anti-patterns
 
 > **Status: 1.0.0** - all 5 implementation phases shipped.
 > CC-only mode, full CRAP mode, HTML report, format parity
@@ -14,18 +14,18 @@ Combines cyclomatic complexity and test coverage into a single score that highli
 CRAP(m) = comp(m)² × (1 − cov(m)/100)³ + comp(m)
 ```
 
-When no coverage data is provided, `ts-crap` falls back to a CC-only mode and uses cyclomatic complexity as the score.
+When no coverage data is provided, `ts-anti-patterns` falls back to a CC-only mode and uses cyclomatic complexity as the score.
 
 ## Install
 
 ```bash
-npm install -g ts-crap
+npm install -g ts-anti-patterns
 ```
 
 Or use **`npx`** without installing (recommended for one-off checks and CI):
 
 ```bash
-npx ts-crap@latest ./src
+npx ts-anti-patterns@latest ./src
 ```
 
 ## Using with npx
@@ -36,87 +36,87 @@ Run from your project root (where `package.json` and `src/` live). No global ins
 
 ```bash
 # Scan ./src (auto-detected if you omit the path)
-npx ts-crap@latest
+npx ts-anti-patterns@latest
 
 # Explicit path
-npx ts-crap@latest ./src
+npx ts-anti-patterns@latest ./src
 
 # HTML report in the current directory
-npx ts-crap@latest ./src --format html --output crap-report.html
+npx ts-anti-patterns@latest ./src --format html --output crap-report.html
 
 # CI gate (exit 1 if anything is above threshold)
-npx ts-crap@latest ./src --threshold 30 --fail-above --summary
+npx ts-anti-patterns@latest ./src --threshold 30 --fail-above --summary
 ```
 
 ### Full CRAP (with coverage)
 
 ```bash
 # One command: try to run tests with coverage, then analyze
-npx ts-crap@latest --full
+npx ts-anti-patterns@latest --full
 
 # Or generate coverage yourself, then analyze
 npm run test:coverage
-npx ts-crap@latest --cov
+npx ts-anti-patterns@latest --cov
 
 # Explicit coverage file
-npx ts-crap@latest --lcov coverage/lcov.info --format html --output crap-report.html
+npx ts-anti-patterns@latest --lcov coverage/lcov.info --format html --output crap-report.html
 ```
 
 ### Custom coverage command (monorepos, pnpm, turbo, etc.)
 
 ```bash
-npx ts-crap@latest --full --coverage-command "pnpm test -- --coverage"
+npx ts-anti-patterns@latest --full --coverage-command "pnpm test -- --coverage"
 ```
 
 ### Pin a version (CI)
 
 ```bash
-npx ts-crap@1.0.0 ./src --threshold 30 --fail-above
+npx ts-anti-patterns@1.0.0 ./src --threshold 30 --fail-above
 ```
 
 ### Install agent skill (Cursor / compatible agents)
 
-`ts-crap` ships a bundled `SKILL.md` so agents know how to run analysis. Install it with `npx` (no global install needed):
+`ts-anti-patterns` ships a bundled `SKILL.md` so agents know how to run analysis. Install it with `npx` (no global install needed):
 
 ```bash
 # User-wide (recommended once per machine)
-npx ts-crap@latest skill install
+npx ts-anti-patterns@latest skill install
 
-# Only for the current repo (commit .agents/skills/ts-crap/SKILL.md if you want the team to share it)
-npx ts-crap@latest skill install --project
+# Only for the current repo (commit .agents/skills/ts-anti-patterns/SKILL.md if you want the team to share it)
+npx ts-anti-patterns@latest skill install --project
 ```
 
 Other skill commands:
 
 ```bash
 # Show where the skill file would be / is installed
-npx ts-crap@latest skill path
-npx ts-crap@latest skill path --project
+npx ts-anti-patterns@latest skill path
+npx ts-anti-patterns@latest skill path --project
 
 # Print bundled skill content
-npx ts-crap@latest skill show
+npx ts-anti-patterns@latest skill show
 
 # Remove installed skill
-npx ts-crap@latest skill uninstall
-npx ts-crap@latest skill uninstall --project
+npx ts-anti-patterns@latest skill uninstall
+npx ts-anti-patterns@latest skill uninstall --project
 ```
 
 **Paths:**
 
 | Scope | Location |
 |---|---|
-| Global | `~/.agents/skills/ts-crap/SKILL.md` |
-| Project | `./.agents/skills/ts-crap/SKILL.md` |
+| Global | `~/.agents/skills/ts-anti-patterns/SKILL.md` |
+| Project | `./.agents/skills/ts-anti-patterns/SKILL.md` |
 
 **Cursor:** agents read skills from `.agents/skills/`. After `skill install`, open a new chat so the skill is picked up. Some setups also use `~/.cursor/skills/` - if needed, symlink:
 
 ```bash
-ln -s ~/.agents/skills/ts-crap ~/.cursor/skills/ts-crap
+ln -s ~/.agents/skills/ts-anti-patterns ~/.cursor/skills/ts-anti-patterns
 ```
 
 ### Local development (this repo)
 
-If you are hacking on `ts-crap` itself, use the built CLI:
+If you are hacking on `ts-anti-patterns` itself, use the built CLI:
 
 ```bash
 npm run build
@@ -126,20 +126,20 @@ node dist/cli.js ./src --format html --output crap-report.html
 Or from another project, point `npx` at the folder:
 
 ```bash
-npx /path/to/ts-crap/dist/cli.js ./src
+npx /path/to/ts-anti-patterns/dist/cli.js ./src
 ```
 
 ## Quick Start - CC-only (no coverage needed)
 
 ```bash
 # Scan a folder
-ts-crap ./src
+ts-anti-patterns ./src
 
 # Multiple paths (shell glob expansion)
-ts-crap ./src/* ./packages/*/src
+ts-anti-patterns ./src/* ./packages/*/src
 
 # CI gate
-ts-crap ./src --threshold 30 --fail-above
+ts-anti-patterns ./src --threshold 30 --fail-above
 ```
 
 The CLI auto-detects `./src` if no path is given.
@@ -150,7 +150,7 @@ By default, reports show the top 20 worst results; override with `--top`.
 One command (auto-generate coverage, then analyze):
 
 ```bash
-ts-crap --full
+ts-anti-patterns --full
 ```
 
 Generate coverage with any standard runner - then enable it with `--cov`
@@ -168,13 +168,13 @@ npx c8 --reporter=lcov npm test
 npx jest --coverage --coverageReporters=lcov
 
 # Then run one of:
-ts-crap --cov                        # auto-detects and scores CRAP
-ts-crap --run-coverage --cov         # generate coverage first, then score
-ts-crap --full                       # shorthand: run coverage + CRAP analysis
-ts-crap --full --coverage-command "pnpm test -- --coverage"  # custom command
-ts-crap --lcov coverage/lcov.info    # explicit path (exit 2 if missing)
-ts-crap                              # default CC-only (no coverage)
-ts-crap --source-map auto            # for transpiled coverage (dist → src)
+ts-anti-patterns --cov                        # auto-detects and scores CRAP
+ts-anti-patterns --run-coverage --cov         # generate coverage first, then score
+ts-anti-patterns --full                       # shorthand: run coverage + CRAP analysis
+ts-anti-patterns --full --coverage-command "pnpm test -- --coverage"  # custom command
+ts-anti-patterns --lcov coverage/lcov.info    # explicit path (exit 2 if missing)
+ts-anti-patterns                              # default CC-only (no coverage)
+ts-anti-patterns --source-map auto            # for transpiled coverage (dist → src)
 ```
 
 Coverage priority: **branch (BRDA) > function (FN/FNDA) > line-range
@@ -222,7 +222,7 @@ policy chooses how to score them:
 | `--diagnose <file>` | - | Debug one file: every AST function + why it was kept/filtered |
 | `--workspace` | off | Scan each package in `package.json#workspaces` |
 | `--watch` | off | Re-render in human format on changes (debounced 200ms) |
-| `--no-cache` | - | Disable the `.ts-crap-cache/` AST cache |
+| `--no-cache` | - | Disable the `.ts-anti-patterns-cache/` AST cache |
 | `--jobs <n>` | `os.cpus()` | Parallel file-analysis concurrency |
 | `--config <path>` | discovered | Path to a config file |
 
@@ -230,10 +230,10 @@ policy chooses how to score them:
 
 | Command | Description |
 |---|---|
-| `ts-crap skill <install\|uninstall\|show\|path>` | Install bundled agent skill (`--project` for repo-local). |
-| `ts-crap init` | Create `.ts-crap.json` and add an `crap` script to `package.json`. Idempotent. |
-| `ts-crap explain <term>` | Print the glossary entry for `crap`, `cc`, `cognitive`, `coverage`, `confidence`, `severity`, `missing`, or `pragma`. |
-| `ts-crap explain` | List every glossary term. |
+| `ts-anti-patterns skill <install\|uninstall\|show\|path>` | Install bundled agent skill (`--project` for repo-local). |
+| `ts-anti-patterns init` | Create `.ts-anti-patterns.json` and add an `crap` script to `package.json`. Idempotent. |
+| `ts-anti-patterns explain <term>` | Print the glossary entry for `crap`, `cc`, `cognitive`, `coverage`, `confidence`, `severity`, `missing`, or `pragma`. |
+| `ts-anti-patterns explain` | List every glossary term. |
 
 ## Output Formats
 
@@ -243,7 +243,7 @@ policy chooses how to score them:
 - **`markdown`** - GFM table with severity emoji. Drops into PR descriptions cleanly.
 - **`github`** - Actions annotations (`::error`, `::warning`, `::notice`).
 - **`sarif`** - SARIF 2.1.0 for GitHub Code Scanning.
-- **`pr-comment`** - markdown with `<!-- ts-crap-report -->` marker so a bot can update the same comment in place. With `--baseline`, regressions go on top.
+- **`pr-comment`** - markdown with `<!-- ts-anti-patterns-report -->` marker so a bot can update the same comment in place. With `--baseline`, regressions go on top.
 
 ## Documentation Index
 
@@ -257,7 +257,7 @@ policy chooses how to score them:
 ## Programmatic API
 
 ```ts
-import { analyze, renderHtml, computeCrap, GLOSSARY } from "ts-crap"
+import { analyze, renderHtml, computeCrap, GLOSSARY } from "ts-anti-patterns"
 
 const { entries, meta } = await analyze({
   paths: ["src"],
@@ -271,10 +271,10 @@ Every renderer (`renderHuman`, `renderJson`, `renderHtml`, `renderMarkdown`, `re
 
 ## CI Quick Start
 
-- **PR gate:** `ts-crap --threshold 30 --fail-above --summary`
-- **Regression gate:** `ts-crap --cov --baseline baseline.json --fail-regression --format json`
-- **Code Scanning:** `ts-crap --cov --format sarif --output ts-crap.sarif`
-- **PR comment:** `ts-crap --cov --baseline baseline.json --format pr-comment --output ts-crap.md`
+- **PR gate:** `ts-anti-patterns --threshold 30 --fail-above --summary`
+- **Regression gate:** `ts-anti-patterns --cov --baseline baseline.json --fail-regression --format json`
+- **Code Scanning:** `ts-anti-patterns --cov --format sarif --output ts-anti-patterns.sarif`
+- **PR comment:** `ts-anti-patterns --cov --baseline baseline.json --format pr-comment --output ts-anti-patterns.md`
 
 For complete workflows, copy examples from [`examples/`](./examples/).
 
@@ -289,7 +289,7 @@ For complete workflows, copy examples from [`examples/`](./examples/).
 
 ## Config File
 
-Discovered via cosmiconfig in this order: `.ts-crap.json`, `.ts-crap.yaml`, `ts-crap.config.{js,cjs,mjs,json}`, or a `ts-crap` key in `package.json`.
+Discovered via cosmiconfig in this order: `.ts-anti-patterns.json`, `.ts-anti-patterns.yaml`, `ts-anti-patterns.config.{js,cjs,mjs,json}`, or a `ts-anti-patterns` key in `package.json`.
 
 ```json
 {

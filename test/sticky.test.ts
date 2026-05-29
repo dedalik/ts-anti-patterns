@@ -28,7 +28,7 @@ function mk(over: Partial<CrapEntry>): CrapEntry {
 
 const dirs: string[] = []
 function mkDir(): string {
-  const d = mkdtempSync(join(tmpdir(), "ts-crap-sticky-"))
+  const d = mkdtempSync(join(tmpdir(), "ts-anti-patterns-sticky-"))
   dirs.push(d)
   return d
 }

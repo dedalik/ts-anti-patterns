@@ -1,11 +1,11 @@
-# lefthook (or husky/simple-git-hooks) - run ts-crap before a push so you
+# lefthook (or husky/simple-git-hooks) - run ts-anti-patterns before a push so you
 # don't accidentally land a function above your team's threshold.
 #
 # Install:    npm install --save-dev lefthook
 # Activate:   npx lefthook install
 #
 # Why pre-push and not pre-commit?
-# - ts-crap parses the whole file, not just the staged hunks, so we don't
+# - ts-anti-patterns parses the whole file, not just the staged hunks, so we don't
 #   gain accuracy from running it on partial diffs.
 # - pre-push runs once per push attempt; pre-commit runs on every commit
 #   in a rebase. The threshold gate isn't worth that friction.
@@ -16,7 +16,7 @@ pre-push:
     crap:
       # Only run when staged TS/JS source changes - skip for docs-only pushes.
       glob: "src/**/*.{ts,tsx,js,jsx,mjs,cjs}"
-      run: npx ts-crap src --threshold 30 --fail-above --summary
+      run: npx ts-anti-patterns src --threshold 30 --fail-above --summary
     tests:
       glob: "*.{ts,tsx,js,jsx}"
       run: npm test --silent
@@ -27,9 +27,9 @@ pre-push:
 #   ──────────────────────────────────────────────
 #   #!/usr/bin/env sh
 #   . "$(dirname -- "$0")/_/husky.sh"
-#   npx ts-crap src --threshold 30 --fail-above --summary || {
+#   npx ts-anti-patterns src --threshold 30 --fail-above --summary || {
 #     echo
-#     echo "✗ ts-crap gate failed. Run \`npx ts-crap src\` to see the worst offenders."
+#     echo "✗ ts-anti-patterns gate failed. Run \`npx ts-anti-patterns src\` to see the worst offenders."
 #     echo "  Override (use sparingly): git push --no-verify"
 #     exit 1
 #   }

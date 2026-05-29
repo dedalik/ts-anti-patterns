@@ -1,4 +1,4 @@
-// `ts-crap init` writes .ts-crap.json and adds an 'crap' npm script. It must
+// `ts-anti-patterns init` writes .ts-anti-patterns.json and adds an 'crap' npm script. It must
 // be idempotent - running it twice doesn't clobber existing files.
 
 import { describe, it, expect, beforeEach, afterAll } from "vitest"
@@ -10,30 +10,30 @@ import { runInit, quickStart } from "../src/init.js"
 describe("runInit()", () => {
   let dir = ""
   beforeEach(() => {
-    dir = mkdtempSync(join(tmpdir(), "ts-crap-init-"))
+    dir = mkdtempSync(join(tmpdir(), "ts-anti-patterns-init-"))
   })
 
-  it("creates .ts-crap.json and adds the npm script when neither exists", async () => {
+  it("creates .ts-anti-patterns.json and adds the npm script when neither exists", async () => {
     writeFileSync(join(dir, "package.json"), JSON.stringify({ name: "demo" }, null, 2))
     const result = await runInit(dir)
     expect(result.configCreated).toBe(true)
     expect(result.scriptAdded).toBe(true)
-    expect(existsSync(join(dir, ".ts-crap.json"))).toBe(true)
+    expect(existsSync(join(dir, ".ts-anti-patterns.json"))).toBe(true)
     const pkg = JSON.parse(readFileSync(join(dir, "package.json"), "utf8")) as {
       scripts?: Record<string, string>
     }
-    expect(pkg.scripts?.crap).toBe("ts-crap")
+    expect(pkg.scripts?.crap).toBe("ts-anti-patterns")
   })
 
   it("is idempotent - second run does not clobber the config or script", async () => {
     writeFileSync(join(dir, "package.json"), JSON.stringify({ name: "demo" }, null, 2))
     await runInit(dir)
     // Tweak the config so we can verify it survives.
-    writeFileSync(join(dir, ".ts-crap.json"), '{"threshold":42}\n')
+    writeFileSync(join(dir, ".ts-anti-patterns.json"), '{"threshold":42}\n')
     const result = await runInit(dir)
     expect(result.configCreated).toBe(false)
     expect(result.scriptAdded).toBe(false)
-    expect(readFileSync(join(dir, ".ts-crap.json"), "utf8")).toBe('{"threshold":42}\n')
+    expect(readFileSync(join(dir, ".ts-anti-patterns.json"), "utf8")).toBe('{"threshold":42}\n')
   })
 
   it("works without a package.json - just creates the config", async () => {
@@ -58,10 +58,10 @@ describe("runInit()", () => {
     const out = quickStart({
       configCreated: true,
       scriptAdded: true,
-      configPath: "/x/.ts-crap.json",
-      notes: ["Created .ts-crap.json", "Added 'crap' script"],
+      configPath: "/x/.ts-anti-patterns.json",
+      notes: ["Created .ts-anti-patterns.json", "Added 'crap' script"],
     })
-    expect(out).toContain("Created .ts-crap.json")
+    expect(out).toContain("Created .ts-anti-patterns.json")
     expect(out).toContain("Added 'crap' script")
     expect(out).toContain("npm run crap")
     expect(out).toContain("--threshold 50")

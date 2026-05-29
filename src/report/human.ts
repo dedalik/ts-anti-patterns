@@ -123,7 +123,7 @@ function filterEntries(entries: CrapEntry[], opts: HumanReportOptions): CrapEntr
 
 function headerLine(meta: ReportMeta, color: Colorizer): string {
   const mode = meta.mode === "crap" ? "CRAP" : "complexity-only"
-  return color.bold(`ts-crap · mode: ${mode}`)
+  return color.bold(`ts-anti-patterns · mode: ${mode}`)
 }
 
 function coverageSourceLine(meta: ReportMeta, color: Colorizer): string {
@@ -194,7 +194,7 @@ function failureLine(
 
 function footerLine(meta: ReportMeta, color: Colorizer): string {
   const bits: string[] = []
-  bits.push(`ts-crap@${meta.version}`)
+  bits.push(`ts-anti-patterns@${meta.version}`)
   bits.push(`node@${meta.node}`)
   bits.push(meta.generatedAt)
   if (meta.coverageSource) {

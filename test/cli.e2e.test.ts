@@ -77,7 +77,7 @@ describe.skipIf(!existsSync(CLI))("CLI e2e (requires `npm run build`)", () => {
     expect(stdout.length).toBeGreaterThan(0)
   })
 
-  it("dogfood: ts-crap ./src renders a JSON report", async () => {
+  it("dogfood: ts-anti-patterns ./src renders a JSON report", async () => {
     const { stdout } = await execFileP("node", [
       CLI,
       "./src",
@@ -127,15 +127,15 @@ describe.skipIf(!existsSync(CLI))("CLI e2e (requires `npm run build`)", () => {
   it("skill subcommands install/show/path/uninstall work in --project scope", async () => {
     const { mkdtemp } = await import("node:fs/promises")
     const { tmpdir } = await import("node:os")
-    const tmp = await mkdtemp(join(tmpdir(), "ts-crap-skill-"))
+    const tmp = await mkdtemp(join(tmpdir(), "ts-anti-patterns-skill-"))
 
     const pathRes = await execFileP("node", [CLI, "skill", "path", "--project"], { cwd: tmp })
-    const expectedSuffix = join(".agents", "skills", "ts-crap", "SKILL.md")
+    const expectedSuffix = join(".agents", "skills", "ts-anti-patterns", "SKILL.md")
     expect(pathRes.stdout.trim().endsWith(expectedSuffix)).toBe(true)
     const expected = join(tmp, expectedSuffix)
 
     const showRes = await execFileP("node", [CLI, "skill", "show"])
-    expect(showRes.stdout).toMatch(/name:\s*ts-crap/)
+    expect(showRes.stdout).toMatch(/name:\s*ts-anti-patterns/)
 
     await execFileP("node", [CLI, "skill", "install", "--project"], { cwd: tmp })
     expect(existsSync(expected)).toBe(true)
@@ -174,7 +174,7 @@ describe.skipIf(!existsSync(CLI))("CLI e2e - coverage (Phase 2)", () => {
     const { mkdtemp, copyFile, mkdir } = await import("node:fs/promises")
     const { tmpdir } = await import("node:os")
     const { join } = await import("node:path")
-    const tmp = await mkdtemp(join(tmpdir(), "ts-crap-full-"))
+    const tmp = await mkdtemp(join(tmpdir(), "ts-anti-patterns-full-"))
     await mkdir(join(tmp, "test/fixtures/tiny"), { recursive: true })
     await copyFile(resolve("test/fixtures/tiny/sample.ts"), join(tmp, "test/fixtures/tiny/sample.ts"))
     await copyFile(resolve("package.json"), join(tmp, "package.json"))
@@ -236,7 +236,7 @@ describe.skipIf(!existsSync(CLI))("CLI e2e - coverage (Phase 2)", () => {
     const { mkdtemp, writeFile, copyFile, mkdir } = await import("node:fs/promises")
     const { tmpdir } = await import("node:os")
     const { join } = await import("node:path")
-    const tmp = await mkdtemp(join(tmpdir(), "ts-crap-auto-"))
+    const tmp = await mkdtemp(join(tmpdir(), "ts-anti-patterns-auto-"))
     await mkdir(join(tmp, "test/fixtures/tiny"), { recursive: true })
     await mkdir(join(tmp, "coverage"), { recursive: true })
     await copyFile(resolve("test/fixtures/tiny/sample.ts"), join(tmp, "test/fixtures/tiny/sample.ts"))
@@ -260,7 +260,7 @@ describe.skipIf(!existsSync(CLI))("CLI e2e - coverage (Phase 2)", () => {
     const { mkdtemp, writeFile, copyFile, mkdir } = await import("node:fs/promises")
     const { tmpdir } = await import("node:os")
     const { join } = await import("node:path")
-    const tmp = await mkdtemp(join(tmpdir(), "ts-crap-auto-"))
+    const tmp = await mkdtemp(join(tmpdir(), "ts-anti-patterns-auto-"))
     await mkdir(join(tmp, "test/fixtures/tiny"), { recursive: true })
     await mkdir(join(tmp, "coverage"), { recursive: true })
     await copyFile(resolve("test/fixtures/tiny/sample.ts"), join(tmp, "test/fixtures/tiny/sample.ts"))

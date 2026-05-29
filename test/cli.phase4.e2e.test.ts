@@ -1,6 +1,6 @@
 // Phase 4 CLI e2e: every format renders, --baseline detects regressions,
 // --fail-regression exits non-zero, --diagnose is a one-file mode,
-// // ts-crap-ignore doesn't trip --fail-above.
+// // ts-anti-patterns-ignore doesn't trip --fail-above.
 
 import { describe, it, expect, beforeAll } from "vitest"
 import { execFile } from "node:child_process"
@@ -30,7 +30,7 @@ async function runCli(args: string[], opts: { cwd?: string } = {}): Promise<RunR
   }
 }
 
-describe("ts-crap CLI - Phase 4", () => {
+describe("ts-anti-patterns CLI - Phase 4", () => {
   beforeAll(async () => {
     // Make sure dist/ is current; the build was already invoked by `npm run build`
     // in CI, but local runs of just this file via `vitest test/cli.phase4.e2e.test.ts`
@@ -44,7 +44,7 @@ describe("ts-crap CLI - Phase 4", () => {
   it("--format markdown emits a GFM table with a heading", async () => {
     const r = await runCli([FIXTURE_TINY, "--lcov", FIXTURE_LCOV, "--format", "markdown", "--threshold", "30"])
     expect(r.code).toBe(0)
-    expect(r.stdout).toMatch(/^## ts-crap report/m)
+    expect(r.stdout).toMatch(/^## ts-anti-patterns report/m)
     expect(r.stdout).toContain("| Sev | Score")
   })
 
@@ -64,13 +64,13 @@ describe("ts-crap CLI - Phase 4", () => {
       runs: { tool: { driver: { rules: { id: string }[] } } }[]
     }
     expect(sarif.version).toBe("2.1.0")
-    expect(sarif.runs[0]!.tool.driver.rules[0]!.id).toBe("ts-crap/score")
+    expect(sarif.runs[0]!.tool.driver.rules[0]!.id).toBe("ts-anti-patterns/score")
   })
 
   it("--format pr-comment opens with the bot marker", async () => {
     const r = await runCli([FIXTURE_TINY, "--lcov", FIXTURE_LCOV, "--format", "pr-comment", "--threshold", "30"])
     expect(r.code).toBe(0)
-    expect(r.stdout.startsWith("<!-- ts-crap-report -->")).toBe(true)
+    expect(r.stdout.startsWith("<!-- ts-anti-patterns-report -->")).toBe(true)
   })
 
   it("--summary prints headline only (no table)", async () => {
@@ -83,12 +83,12 @@ describe("ts-crap CLI - Phase 4", () => {
   it("--diagnose dumps every AST function from one file", async () => {
     const r = await runCli(["--diagnose", join(FIXTURE_TINY, "sample.ts")])
     expect(r.code).toBe(0)
-    expect(r.stdout).toContain("ts-crap diagnose")
+    expect(r.stdout).toContain("ts-anti-patterns diagnose")
     expect(r.stdout).toMatch(/functions discovered:\s+\d+/)
   })
 
   it("--baseline + --fail-regression flags a real regression and exits non-zero", async () => {
-    const tmp = await mkdtemp(join(tmpdir(), "ts-crap-baseline-"))
+    const tmp = await mkdtemp(join(tmpdir(), "ts-anti-patterns-baseline-"))
     try {
       // 1) Build a tiny project with a single low-CC function.
       await writeFile(
@@ -123,13 +123,13 @@ describe("ts-crap CLI - Phase 4", () => {
     }
   })
 
-  it("// ts-crap-ignore does NOT trip --fail-above", async () => {
-    const tmp = await mkdtemp(join(tmpdir(), "ts-crap-ignore-"))
+  it("// ts-anti-patterns-ignore does NOT trip --fail-above", async () => {
+    const tmp = await mkdtemp(join(tmpdir(), "ts-anti-patterns-ignore-"))
     try {
       await writeFile(
         join(tmp, "a.ts"),
         [
-          "// ts-crap-ignore generated DSL",
+          "// ts-anti-patterns-ignore generated DSL",
           "export function ladder(n: number): number {",
           ...Array.from({ length: 20 }, (_, i) => `  if (n === ${i}) return ${i}`),
           "  return -1",
@@ -146,7 +146,7 @@ describe("ts-crap CLI - Phase 4", () => {
   })
 
   it("--workspace scans every package.json workspaces entry", async () => {
-    const root = await mkdtemp(join(tmpdir(), "ts-crap-workspace-"))
+    const root = await mkdtemp(join(tmpdir(), "ts-anti-patterns-workspace-"))
     try {
       await writeFile(
         join(root, "package.json"),

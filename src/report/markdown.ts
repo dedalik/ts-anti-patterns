@@ -33,7 +33,7 @@ export function renderMarkdown(
     : [":-:", "--:", "--:", "--:", "--:", "---", "---", "---"]
 
   const lines: string[] = []
-  lines.push(`## ts-crap report - ${isCrap ? "CRAP" : "complexity-only"} mode`)
+  lines.push(`## ts-anti-patterns report - ${isCrap ? "CRAP" : "complexity-only"} mode`)
   lines.push("")
   if (meta.coverageSource) {
     lines.push(
@@ -76,7 +76,7 @@ export function renderMarkdown(
 
   lines.push("")
   lines.push("---")
-  lines.push(`<sub>ts-crap@${meta.version} · node@${meta.node} · ${meta.generatedAt}</sub>`)
+  lines.push(`<sub>ts-anti-patterns@${meta.version} · node@${meta.node} · ${meta.generatedAt}</sub>`)
   return lines.join("\n") + "\n"
 }
 

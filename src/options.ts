@@ -46,7 +46,7 @@ export interface CrapEntry extends FunctionMetric {
 
 // Reproducibility metadata stamped into every report.
 export interface ReportMeta {
-  version: string // ts-crap version
+  version: string // ts-anti-patterns version
   generatedAt: string // ISO-8601 UTC
   node: string // process.version
   cwd: string

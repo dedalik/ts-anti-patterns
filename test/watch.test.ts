@@ -12,7 +12,7 @@ const dirs: string[] = []
 const handles: WatchHandle[] = []
 
 function mkRoot(): string {
-  const d = mkdtempSync(join(tmpdir(), "ts-crap-watch-"))
+  const d = mkdtempSync(join(tmpdir(), "ts-anti-patterns-watch-"))
   dirs.push(d)
   return d
 }

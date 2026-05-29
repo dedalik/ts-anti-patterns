@@ -13,7 +13,7 @@ const META: ReportMeta = {
   generatedAt: "2026-05-26T12:00:00.000Z",
   node: "v22.0.0",
   cwd: "/proj",
-  command: "ts-crap src --format html",
+  command: "ts-anti-patterns src --format html",
   mode: "crap",
   coverageSource: {
     path: "coverage/lcov.info",
@@ -70,7 +70,7 @@ describe("renderHtml - output shape", () => {
   })
 
   it("inlines styles, script, and JSON without external requests", () => {
-    expect(html).toMatch(/<style>[\s\S]+ts-crap/i)
+    expect(html).toMatch(/<style>[\s\S]+ts-anti-patterns/i)
     expect(html).toContain("<script id=\"data\" type=\"application/json\">")
     expect(html).toMatch(/<script>[\s\S]+function escapeHtml/)
     // No external <link rel="stylesheet"> or <script src=>

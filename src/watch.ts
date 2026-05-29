@@ -59,7 +59,7 @@ export function watch(opts: WatchOptions): WatchHandle {
       /(^|[\\/])dist([\\/]|$)/,
       /(^|[\\/])build([\\/]|$)/,
       /(^|[\\/])coverage([\\/]|$)/,
-      /(^|[\\/])\.ts-crap-cache([\\/]|$)/,
+      /(^|[\\/])\.ts-anti-patterns-cache([\\/]|$)/,
       ...(opts.ignored ?? []),
     ],
     ignoreInitial: opts.initial === false ? true : true,

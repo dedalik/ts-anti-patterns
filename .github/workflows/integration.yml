@@ -1,6 +1,6 @@
 name: Integration
 
-# Real-world smoke: build ts-crap, point it at pinned commits of a handful of
+# Real-world smoke: build ts-anti-patterns, point it at pinned commits of a handful of
 # popular TS/JS repos, assert every output format renders and the JSON
 # envelope conforms to schemas/report-v1.json.
 #
@@ -31,7 +31,7 @@ jobs:
     strategy:
       fail-fast: false
       # Pin to specific commits, not branches: nightlies should fail because
-      # ts-crap broke, not because a downstream project shipped a new commit.
+      # ts-anti-patterns broke, not because a downstream project shipped a new commit.
       matrix:
         target:
           - name: p-limit
@@ -45,7 +45,7 @@ jobs:
             ref: main # the stress test - large surface
 
     steps:
-      - name: Check out ts-crap
+      - name: Check out ts-anti-patterns
         uses: actions/checkout@v4
 
       - name: Set up Node 22
@@ -54,7 +54,7 @@ jobs:
           node-version: "22"
           cache: npm
 
-      - name: Install + build ts-crap
+      - name: Install + build ts-anti-patterns
         run: |
           npm ci
           npm run build

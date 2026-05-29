@@ -1,14 +1,14 @@
 // Source-level pragmas:
-//   // ts-crap-ignore "reason"        suppress this function from --fail-above
-//   // ts-crap-ignore reason text     (quotes optional)
-//   // ts-crap-threshold 60           override threshold for this function
+//   // ts-anti-patterns-ignore "reason"        suppress this function from --fail-above
+//   // ts-anti-patterns-ignore reason text     (quotes optional)
+//   // ts-anti-patterns-threshold 60           override threshold for this function
 //
 // The pragma must be on a line directly above a function-bearing statement.
 // Blank lines between the pragma and the function are allowed; other code or
 // non-pragma comments break the association.
 //
 // We don't try to be clever with TSDoc/JSDoc - only line comments starting
-// with the ts-crap- prefix qualify.
+// with the ts-anti-patterns- prefix qualify.
 
 export interface PragmaInfo {
   suppressed?: { reason: string }
@@ -16,7 +16,7 @@ export interface PragmaInfo {
 }
 
 /**
- * Parse the source for ts-crap pragmas, returning a map keyed by the 1-based
+ * Parse the source for ts-anti-patterns pragmas, returning a map keyed by the 1-based
  * line of the *first non-blank, non-comment line beneath the pragma block*.
  * The function-name resolver in complexity.ts records each function at its
  * declaration line; the orchestrator joins by that same line.
@@ -68,14 +68,14 @@ export function parsePragmas(source: string): Map<number, PragmaInfo> {
 }
 
 function parsePragmaLine(directive: string): PragmaInfo | undefined {
-  // Match either `ts-crap-ignore <rest>` or `ts-crap-threshold <n>`.
-  const ignoreMatch = directive.match(/^ts-crap-ignore(?:\s+(.*))?$/)
+  // Match either `ts-anti-patterns-ignore <rest>` or `ts-anti-patterns-threshold <n>`.
+  const ignoreMatch = directive.match(/^ts-anti-patterns-ignore(?:\s+(.*))?$/)
   if (ignoreMatch) {
     const rawReason = (ignoreMatch[1] ?? "").trim()
     const reason = stripQuotes(rawReason) || "(no reason given)"
     return { suppressed: { reason } }
   }
-  const thresholdMatch = directive.match(/^ts-crap-threshold\s+(-?\d+(?:\.\d+)?)\s*$/)
+  const thresholdMatch = directive.match(/^ts-anti-patterns-threshold\s+(-?\d+(?:\.\d+)?)\s*$/)
   if (thresholdMatch) {
     const value = parseFloat(thresholdMatch[1] ?? "NaN")
     if (Number.isFinite(value) && value >= 0) {

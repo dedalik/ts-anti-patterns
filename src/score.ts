@@ -60,7 +60,7 @@ export function scoreOf(
  *   warning  score <= 2 * threshold
  *   error    score >  2 * threshold
  *
- * A function-local threshold from a `// ts-crap-threshold N` pragma
+ * A function-local threshold from a `// ts-anti-patterns-threshold N` pragma
  * overrides the global threshold for that function.
  */
 export function severityOf(

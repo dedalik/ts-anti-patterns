@@ -7,9 +7,9 @@ describe("pragmas", () => {
     expect(result.size).toBe(0)
   })
 
-  it("// ts-crap-ignore attaches to the next code line", () => {
+  it("// ts-anti-patterns-ignore attaches to the next code line", () => {
     const source = [
-      "// ts-crap-ignore",
+      "// ts-anti-patterns-ignore",
       "function f() { return 1 }",
     ].join("\n")
     const result = parsePragmas(source)
@@ -18,7 +18,7 @@ describe("pragmas", () => {
 
   it("ignore captures a quoted reason", () => {
     const source = [
-      '// ts-crap-ignore "legacy code, will rewrite in Q2"',
+      '// ts-anti-patterns-ignore "legacy code, will rewrite in Q2"',
       "function f() { return 1 }",
     ].join("\n")
     expect(result(source, 2).suppressed?.reason).toBe(
@@ -28,15 +28,15 @@ describe("pragmas", () => {
 
   it("ignore captures an unquoted reason", () => {
     const source = [
-      "// ts-crap-ignore migration target",
+      "// ts-anti-patterns-ignore migration target",
       "function f() { return 1 }",
     ].join("\n")
     expect(result(source, 2).suppressed?.reason).toBe("migration target")
   })
 
-  it("// ts-crap-threshold sets a local threshold", () => {
+  it("// ts-anti-patterns-threshold sets a local threshold", () => {
     const source = [
-      "// ts-crap-threshold 60",
+      "// ts-anti-patterns-threshold 60",
       "function huge() { return 1 }",
     ].join("\n")
     expect(result(source, 2).localThreshold).toBe(60)
@@ -44,7 +44,7 @@ describe("pragmas", () => {
 
   it("pragma + blank line + function still binds", () => {
     const source = [
-      "// ts-crap-ignore",
+      "// ts-anti-patterns-ignore",
       "",
       "",
       "function f() { return 1 }",
@@ -54,7 +54,7 @@ describe("pragmas", () => {
 
   it("a non-pragma comment between breaks the binding", () => {
     const source = [
-      "// ts-crap-ignore",
+      "// ts-anti-patterns-ignore",
       "// some unrelated note",
       "function f() { return 1 }",
     ].join("\n")
@@ -64,8 +64,8 @@ describe("pragmas", () => {
 
   it("both directives stack on one function", () => {
     const source = [
-      "// ts-crap-ignore tech debt",
-      "// ts-crap-threshold 50",
+      "// ts-anti-patterns-ignore tech debt",
+      "// ts-anti-patterns-threshold 50",
       "function f() { return 1 }",
     ].join("\n")
     const got = result(source, 3)
@@ -75,7 +75,7 @@ describe("pragmas", () => {
 
   it("invalid threshold value is ignored", () => {
     const source = [
-      "// ts-crap-threshold nope",
+      "// ts-anti-patterns-threshold nope",
       "function f() { return 1 }",
     ].join("\n")
     expect(parsePragmas(source).size).toBe(0)

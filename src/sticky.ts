@@ -1,6 +1,6 @@
 // Sticky local baseline.
 //
-// Every successful run writes the JSON report to .ts-crap-cache/last.json.
+// Every successful run writes the JSON report to .ts-anti-patterns-cache/last.json.
 // The next run, if no explicit --baseline is given, reads that file and
 // surfaces "Δ since last run" in the human-format header. It never gates
 // CI (only --baseline + --fail-regression does that) - it's a developer
@@ -12,7 +12,7 @@ import { dirname, resolve } from "node:path"
 import { loadBaseline, diff, type DeltaSummary } from "./delta.js"
 import type { CrapEntry } from "./options.js"
 
-export const STICKY_PATH = ".ts-crap-cache/last.json"
+export const STICKY_PATH = ".ts-anti-patterns-cache/last.json"
 
 export async function saveSticky(root: string, jsonReport: string): Promise<void> {
   const abs = resolve(root, STICKY_PATH)

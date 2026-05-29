@@ -38,9 +38,9 @@ Schemas in `schemas/report-v1.json` and `schemas/delta-v1.json` are a public con
 
 ## Release smoke checklist
 
-1. `npx ts-crap` on a project without coverage - CC table, top 20, footer.
-2. `npx ts-crap --cov` or `--full` - CRAP when coverage exists.
-3. `npx ts-crap --format html -o report.html` - opens offline.
+1. `npx ts-anti-patterns` on a project without coverage - CC table, top 20, footer.
+2. `npx ts-anti-patterns --cov` or `--full` - CRAP when coverage exists.
+3. `npx ts-anti-patterns --format html -o report.html` - opens offline.
 4. `--baseline` + `--fail-regression` gates regressions.
 5. `npm pack --dry-run` includes `dist/` and `schemas/`.
 

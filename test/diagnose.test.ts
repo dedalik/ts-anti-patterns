@@ -14,11 +14,11 @@ function makeOpts(over: Partial<ResolvedOptions> = {}): ResolvedOptions {
 }
 
 describe("diagnose()", () => {
-  const dir = mkdtempSync(join(tmpdir(), "ts-crap-diagnose-"))
+  const dir = mkdtempSync(join(tmpdir(), "ts-anti-patterns-diagnose-"))
   const file = join(dir, "sample.ts")
   writeFileSync(
     file,
-    `// ts-crap-ignore intentional ladder
+    `// ts-anti-patterns-ignore intentional ladder
 export function ladder(x: number): number {
   if (x > 10) return 1
   if (x > 20) return 2
@@ -42,7 +42,7 @@ export function plain(): number {
       coverage: null,
       displayPath: (abs) => abs.replace(dir + "/", ""),
     })
-    expect(out).toContain("ts-crap diagnose")
+    expect(out).toContain("ts-anti-patterns diagnose")
     expect(out).toMatch(/functions discovered: \d+/)
     expect(out).toMatch(/ladder.*CC=4/)
     expect(out).toMatch(/plain.*CC=1/)
@@ -71,10 +71,10 @@ export function plain(): number {
       options: makeOpts(),
       coverage: null,
       displayPath: (abs) => abs.replace(dir + "/", ""),
-      configPath: "/proj/.ts-crap.json",
+      configPath: "/proj/.ts-anti-patterns.json",
       configSha: "abc123",
     })
-    expect(out).toContain("/proj/.ts-crap.json")
+    expect(out).toContain("/proj/.ts-anti-patterns.json")
     expect(out).toContain("[abc123]")
   })
 

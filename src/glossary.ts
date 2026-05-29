@@ -1,6 +1,6 @@
 // Single source of truth for the metric glossary.
 //
-// The HTML report's `?` popovers and the `ts-crap explain <term>` CLI both
+// The HTML report's `?` popovers and the `ts-anti-patterns explain <term>` CLI both
 // read from here. Each entry has:
 //   - `title` - short name shown in headings.
 //   - `text`  - plain-text body for terminals and the CLI.
@@ -53,12 +53,12 @@ export const GLOSSARY: Record<string, GlossaryEntry> = {
     title: "Coverage",
     text:
       "Per-function execution coverage from your test runner.\n" +
-      "ts-crap picks the highest-confidence source available:\n" +
+      "ts-anti-patterns picks the highest-confidence source available:\n" +
       "  1. Branch coverage (BRDA / cond) - every decision exercised.\n" +
       "  2. Function coverage (FN / FNDA) - function entered at least once.\n" +
       "  3. Line-range fallback - average of hit-counts across the body.",
     html:
-      "<p>Per-function execution coverage from your test runner. ts-crap chooses the " +
+      "<p>Per-function execution coverage from your test runner. ts-anti-patterns chooses the " +
       "highest-confidence source available:</p>" +
       "<ol><li><strong>Branch</strong> coverage (BRDA / cond) - every decision exercised.</li>" +
       "<li><strong>Function</strong> coverage (FN / FNDA) - function entered at least once.</li>" +
@@ -85,14 +85,14 @@ export const GLOSSARY: Record<string, GlossaryEntry> = {
       "  info     T/2 < score ≤ T\n" +
       "  warning  T  < score ≤ 2T\n" +
       "  error    score > 2T\n" +
-      "A `// ts-crap-threshold N` pragma overrides T for one function.",
+      "A `// ts-anti-patterns-threshold N` pragma overrides T for one function.",
     html:
       "<p>Calculated from score vs threshold (T):</p>" +
       "<ul><li><code>ok</code>: score ≤ T/2</li>" +
       "<li><code>info</code>: T/2 < score ≤ T</li>" +
       "<li><code>warning</code>: T < score ≤ 2T</li>" +
       "<li><code>error</code>: score > 2T</li></ul>" +
-      "<p>A <code>// ts-crap-threshold N</code> pragma overrides T for one function.</p>",
+      "<p>A <code>// ts-anti-patterns-threshold N</code> pragma overrides T for one function.</p>",
   },
   missing: {
     title: "Missing-coverage policy",
@@ -110,16 +110,16 @@ export const GLOSSARY: Record<string, GlossaryEntry> = {
   pragma: {
     title: "In-source pragmas",
     text:
-      "// ts-crap-ignore [reason]\n" +
+      "// ts-anti-patterns-ignore [reason]\n" +
       "  Suppresses the next function from --fail-above. The reason appears " +
       "in the Suppressed section.\n\n" +
-      "// ts-crap-threshold N\n" +
+      "// ts-anti-patterns-threshold N\n" +
       "  Per-function threshold that overrides the global one for severity.",
     html:
-      "<p><code>// ts-crap-ignore [reason]</code> on the line above a function " +
+      "<p><code>// ts-anti-patterns-ignore [reason]</code> on the line above a function " +
       "suppresses it from <code>--fail-above</code>. The reason shows up in the " +
       "Suppressed section.</p>" +
-      "<p><code>// ts-crap-threshold N</code> sets a per-function threshold that " +
+      "<p><code>// ts-anti-patterns-threshold N</code> sets a per-function threshold that " +
       "overrides the global one for that function's severity.</p>",
   },
 }

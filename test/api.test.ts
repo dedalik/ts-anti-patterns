@@ -19,7 +19,7 @@ import {
 
 const dirs: string[] = []
 function fixtureProject(): string {
-  const dir = mkdtempSync(join(tmpdir(), "ts-crap-api-"))
+  const dir = mkdtempSync(join(tmpdir(), "ts-anti-patterns-api-"))
   dirs.push(dir)
   writeFileSync(
     join(dir, "a.ts"),
@@ -72,7 +72,7 @@ describe("programmatic API", () => {
       showHints: true,
       colors: false,
     })
-    expect(human).toContain("ts-crap")
+    expect(human).toContain("ts-anti-patterns")
 
     const json = renderJson(entries, meta, { threshold: 5 })
     const parsed = JSON.parse(json) as { entries: unknown[] }

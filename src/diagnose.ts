@@ -1,4 +1,4 @@
-// `ts-crap --diagnose <file>` - focused debug output for one file.
+// `ts-anti-patterns --diagnose <file>` - focused debug output for one file.
 //
 // Prints:
 //   - All functions the AST parser found (name, line, endLine, CC, cog, sloc).
@@ -33,7 +33,7 @@ export async function diagnose(filePath: string, ctx: Omit<DiagnoseContext, "fil
 export function diagnoseSync(ctx: DiagnoseContext): string {
   const { filePath, source, options, coverage, displayPath } = ctx
   const lines: string[] = []
-  lines.push("ts-crap diagnose")
+  lines.push("ts-anti-patterns diagnose")
   lines.push("================")
   lines.push(`file:     ${displayPath(filePath)}`)
   lines.push(`absolute: ${filePath}`)

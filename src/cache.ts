@@ -1,6 +1,6 @@
 // Per-file metrics cache, keyed by mtime+size.
 //
-// The cache lives at .ts-crap-cache/metrics.json. We never trust the AST
+// The cache lives at .ts-anti-patterns-cache/metrics.json. We never trust the AST
 // from disk if the file mtime or size has changed - we recompute. We also
 // invalidate the whole cache whenever the analysis-affecting options change
 // (cognitive on/off, count-nullish-coalescing on/off) because they alter
@@ -12,7 +12,7 @@ import { dirname, resolve } from "node:path"
 import type { FunctionMetric } from "./options.js"
 import type { ComplexityOptions } from "./complexity.js"
 
-export const CACHE_PATH = ".ts-crap-cache/metrics.json"
+export const CACHE_PATH = ".ts-anti-patterns-cache/metrics.json"
 
 interface CacheEntry {
   mtime: number

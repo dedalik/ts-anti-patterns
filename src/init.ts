@@ -1,8 +1,8 @@
-// `ts-crap init` - drops a sensible .ts-crap.json next to package.json,
+// `ts-anti-patterns init` - drops a sensible .ts-anti-patterns.json next to package.json,
 // registers an npm script, and prints a 3-line quick-start so the user
 // knows what to do next.
 //
-// Idempotent: if .ts-crap.json or the npm script already exists they're
+// Idempotent: if .ts-anti-patterns.json or the npm script already exists they're
 // left alone and the user is told.
 
 import { existsSync } from "node:fs"
@@ -27,7 +27,7 @@ const DEFAULT_CONFIG = {
 
 export async function runInit(cwd: string): Promise<InitResult> {
   const notes: string[] = []
-  const configPath = resolve(cwd, ".ts-crap.json")
+  const configPath = resolve(cwd, ".ts-anti-patterns.json")
   let configCreated = false
   if (existsSync(configPath)) {
     notes.push(`Skipped: ${relative(cwd, configPath)} already exists.`)
@@ -55,7 +55,7 @@ export async function runInit(cwd: string): Promise<InitResult> {
     if (json.scripts.crap) {
       notes.push(`Skipped: npm script 'crap' already exists.`)
     } else {
-      json.scripts.crap = "ts-crap"
+      json.scripts.crap = "ts-anti-patterns"
       const serialized =
         JSON.stringify(json, null, indent) + (trailingNewline ? "\n" : "")
       await writeFile(pkgPath, serialized, "utf8")

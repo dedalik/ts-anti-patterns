@@ -6,7 +6,7 @@ import { fileURLToPath } from "node:url"
 
 export type SkillScope = "global" | "project"
 
-const SKILL_NAME = "ts-crap"
+const SKILL_NAME = "ts-anti-patterns"
 
 export function resolveSkillPath(scope: SkillScope, cwd = process.cwd()): string {
   if (scope === "project") {

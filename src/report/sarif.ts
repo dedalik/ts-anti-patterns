@@ -3,7 +3,7 @@
 //
 // Schema reference: https://docs.oasis-open.org/sarif/sarif/v2.1.0/
 //
-// One rule: `ts-crap/score`. Each function above OK severity → one result
+// One rule: `ts-anti-patterns/score`. Each function above OK severity → one result
 // with level note|warning|error chosen by severity.
 
 import { sortEntries } from "./human.js"
@@ -39,7 +39,7 @@ export function renderSarif(
     const level = LEVEL[e.severity]
     if (!level) continue
     results.push({
-      ruleId: "ts-crap/score",
+      ruleId: "ts-anti-patterns/score",
       level,
       message: {
         text: messageText(e, opts.threshold),
@@ -75,24 +75,24 @@ export function renderSarif(
       {
         tool: {
           driver: {
-            name: "ts-crap",
+            name: "ts-anti-patterns",
             version: meta.version,
-            informationUri: "https://github.com/dedalik/ts-crap",
+            informationUri: "https://github.com/dedalik/ts-anti-patterns",
             rules: [
               {
-                id: "ts-crap/score",
+                id: "ts-anti-patterns/score",
                 name: "CrapScore",
                 shortDescription: {
-                  text: "Function exceeds the configured ts-crap threshold.",
+                  text: "Function exceeds the configured ts-anti-patterns threshold.",
                 },
                 fullDescription: {
                   text:
                     "CRAP = comp² × (1 − cov/100)³ + comp. In CC-only mode " +
                     "(no coverage source) the score equals cyclomatic complexity.",
                 },
-                helpUri: "https://github.com/dedalik/ts-crap#crap-score",
+                helpUri: "https://github.com/dedalik/ts-anti-patterns#crap-score",
                 defaultConfiguration: { level: "warning" },
-                properties: { tags: ["maintainability", "complexity", "ts-crap"] },
+                properties: { tags: ["maintainability", "complexity", "ts-anti-patterns"] },
               },
             ],
           },

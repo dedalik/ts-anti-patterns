@@ -1,4 +1,4 @@
-// ts-crap HTML report - vanilla ESM, no dependencies, no network.
+// ts-anti-patterns HTML report - vanilla ESM, no dependencies, no network.
 // Reads the embedded JSON, builds the table, wires the filters and slider,
 // keeps the URL hash in sync so reports can be shared with a specific view.
 
@@ -136,7 +136,7 @@ function initStaticBits() {
       "Using coverage: " + src.path + (src.hint ? " (" + src.hint + ")" : "")
   }
   const fParts = [
-    "ts-crap@" + (meta.version || "?"),
+    "ts-anti-patterns@" + (meta.version || "?"),
     "node@" + (meta.node || "?"),
     meta.generatedAt || "",
     meta.coverageSource ? "coverage: " + meta.coverageSource.path : "coverage: none",
@@ -408,7 +408,7 @@ function exportCsv() {
   const url = URL.createObjectURL(blob)
   const a = document.createElement("a")
   a.href = url
-  a.download = "ts-crap.csv"
+  a.download = "ts-anti-patterns.csv"
   a.click()
   setTimeout(() => URL.revokeObjectURL(url), 500)
 }

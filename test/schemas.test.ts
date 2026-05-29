@@ -55,7 +55,7 @@ const META: ReportMeta = {
   generatedAt: "2026-05-26T12:00:00.000Z",
   node: "v22.0.0",
   cwd: "/proj",
-  command: "ts-crap src",
+  command: "ts-anti-patterns src",
   mode: "crap",
   coverageSource: {
     path: "coverage/lcov.info",
@@ -117,7 +117,7 @@ describe("delta-v1.json schema", () => {
     ]
     const d = diff(current, baseline, { epsilon: 0.01 })
     const envelope = {
-      $schema: "https://raw.githubusercontent.com/dedalik/ts-crap/main/schemas/delta-v1.json",
+      $schema: "https://raw.githubusercontent.com/dedalik/ts-anti-patterns/main/schemas/delta-v1.json",
       schemaVersion: "1.0.0",
       epsilon: 0.01,
       summary: d.summary,

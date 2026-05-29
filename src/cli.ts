@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// ts-crap - CLI entry point.
+// ts-anti-patterns - CLI entry point.
 //
 // Phase 2+: defaults to CC-only. Coverage is enabled explicitly via
 // --cov (auto-detect) or --lcov/--coverage (explicit path).
@@ -89,7 +89,7 @@ interface CliFlags {
   coverageCommand?: string
 }
 
-const cli = cac("ts-crap")
+const cli = cac("ts-anti-patterns")
 
 cli
   .command("[...paths]", "Analyze TypeScript/JavaScript files for complexity & coverage risk")
@@ -147,16 +147,16 @@ cli
   .option("--workspace", "Scan each package listed in package.json#workspaces")
   .option("--jobs <n>", "Parallel file-analysis concurrency (default os.cpus().length)")
   .option("--watch", "Re-render in human format whenever a source file changes (debounced 200ms)")
-  .option("--no-cache", "Disable the .ts-crap-cache/ AST cache")
+  .option("--no-cache", "Disable the .ts-anti-patterns-cache/ AST cache")
   .action(async (paths: string[], flags: CliFlags) => {
     try {
       await run(paths, flags)
     } catch (err) {
       const e = err as Error
       if (process.env.TS_CRAP_DEBUG) {
-        process.stderr.write(`ts-crap: ${e.stack ?? e.message}\n`)
+        process.stderr.write(`ts-anti-patterns: ${e.stack ?? e.message}\n`)
       } else {
-        process.stderr.write(`ts-crap: ${e.message}\n`)
+        process.stderr.write(`ts-anti-patterns: ${e.message}\n`)
       }
       process.exitCode = 2
     }
@@ -169,15 +169,15 @@ cli
     const scope = flags.project ? "project" : "global"
     if (action === "install") {
       const dest = await installSkill(scope)
-      process.stdout.write(`Installed ts-crap skill to ${dest}\n`)
+      process.stdout.write(`Installed ts-anti-patterns skill to ${dest}\n`)
       return
     }
     if (action === "uninstall") {
       const removed = await uninstallSkill(scope)
       if (removed) {
-        process.stdout.write(`Removed ts-crap skill from ${resolveSkillPath(scope)}\n`)
+        process.stdout.write(`Removed ts-anti-patterns skill from ${resolveSkillPath(scope)}\n`)
       } else {
-        process.stdout.write(`No ts-crap skill installed at ${resolveSkillPath(scope)}\n`)
+        process.stdout.write(`No ts-anti-patterns skill installed at ${resolveSkillPath(scope)}\n`)
       }
       return
     }
@@ -196,14 +196,14 @@ cli
   })
 
 cli
-  .command("init", "Create .ts-crap.json with sensible defaults and add an 'crap' npm script")
+  .command("init", "Create .ts-anti-patterns.json with sensible defaults and add an 'crap' npm script")
   .action(async () => {
     const result = await runInit(process.cwd())
     process.stdout.write(quickStart(result))
   })
 
 cli
-  .command("explain [term]", "Explain a ts-crap term (crap, cc, cognitive, coverage, ...)")
+  .command("explain [term]", "Explain a ts-anti-patterns term (crap, cc, cognitive, coverage, ...)")
   .action((term: string | undefined) => {
     if (!term) {
       process.stdout.write("Available terms:\n")
@@ -290,7 +290,7 @@ async function run(paths: string[], flags: CliFlags): Promise<void> {
   if (flags.watch) {
     if (opts.format !== "human") {
       process.stderr.write(
-        "ts-crap: --watch only renders the human format; other formats are ignored.\n"
+        "ts-anti-patterns: --watch only renders the human format; other formats are ignored.\n"
       )
     }
     const handle = watch({
@@ -303,7 +303,7 @@ async function run(paths: string[], flags: CliFlags): Promise<void> {
           await once()
         } catch (err) {
           const e = err as Error
-          process.stderr.write(`ts-crap: ${e.message}\n`)
+          process.stderr.write(`ts-anti-patterns: ${e.message}\n`)
         }
       },
     })
@@ -375,7 +375,7 @@ function resolveOptions(
 
 function warnOnUnknownConfig(keys: readonly string[]): void {
   if (keys.length > 0) {
-    process.stderr.write(`ts-crap: ignoring unknown config keys: ${keys.join(", ")}\n`)
+    process.stderr.write(`ts-anti-patterns: ignoring unknown config keys: ${keys.join(", ")}\n`)
   }
 }
 
@@ -507,7 +507,7 @@ async function maybeGenerateCoverage(
     )
   }
 
-  process.stderr.write(`ts-crap: generating coverage via '${command}'\n`)
+  process.stderr.write(`ts-anti-patterns: generating coverage via '${command}'\n`)
   await runShell(command, process.cwd())
 
   const after = sniffCoverage(root) ?? sniffCoverage(process.cwd())
@@ -590,7 +590,7 @@ function buildMeta(
     generatedAt: new Date().toISOString(),
     node: process.version,
     cwd: process.cwd(),
-    command: ["ts-crap", ...process.argv.slice(2)].join(" "),
+    command: ["ts-anti-patterns", ...process.argv.slice(2)].join(" "),
     mode: entries.some((e) => e.mode === "crap") ? "crap" : "cc",
     coverageSource: coverage
       ? {

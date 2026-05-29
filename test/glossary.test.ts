@@ -1,5 +1,5 @@
 // One source of truth for glossary content. Verifies the HTML report and
-// the `ts-crap explain` CLI both source from the same place.
+// the `ts-anti-patterns explain` CLI both source from the same place.
 
 import { describe, it, expect } from "vitest"
 import { GLOSSARY, explain, listTerms } from "../src/glossary.js"

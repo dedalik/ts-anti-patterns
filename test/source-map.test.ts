@@ -9,7 +9,7 @@ import { emptyFileCoverage, type CoverageMap } from "../src/coverage/types.js"
 let tmp = ""
 
 beforeAll(async () => {
-  tmp = await mkdtemp(join(tmpdir(), "ts-crap-sm-"))
+  tmp = await mkdtemp(join(tmpdir(), "ts-anti-patterns-sm-"))
 
   // Generated file: dist/foo.js, points back to src/foo.ts.
   const generated = "function foo(){return 1}\nfunction bar(){return 2}\n//# sourceMappingURL=foo.js.map\n"

@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
-# scripts/smoke-real.sh - exercise ts-crap against a real-world TS/JS project.
+# scripts/smoke-real.sh - exercise ts-anti-patterns against a real-world TS/JS project.
 #
 # What it does:
 #   1. Clones the target repo into a tmpdir (shallow).
 #   2. Installs its deps.
-#   3. Best-effort: runs its tests with coverage so ts-crap has data to chew on.
+#   3. Best-effort: runs its tests with coverage so ts-anti-patterns has data to chew on.
 #   4. Runs every output format end-to-end (human, json, html, markdown, sarif).
 #   5. Validates the JSON envelope against schemas/report-v1.json.
 #   6. Prints a 1-line summary per stage and an artifact list at the end.
@@ -14,7 +14,7 @@
 #   ./scripts/smoke-real.sh https://github.com/colinhacks/zod
 #   ./scripts/smoke-real.sh https://github.com/sindresorhus/ky main
 #
-# Exit code is the worst of the formats - any non-zero ts-crap exit (other than
+# Exit code is the worst of the formats - any non-zero ts-anti-patterns exit (other than
 # --fail-above hits, which we suppress here) fails the smoke.
 #
 # This is a *smoke* test, not a benchmark. It proves we don't crash on real code.
@@ -30,11 +30,11 @@ TS_CRAP_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
 TS_CRAP_BIN="$TS_CRAP_ROOT/dist/cli.js"
 
 if [ ! -f "$TS_CRAP_BIN" ]; then
-  echo "ts-crap dist/ missing. Building first..."
+  echo "ts-anti-patterns dist/ missing. Building first..."
   (cd "$TS_CRAP_ROOT" && npm run build) || { echo "Build failed"; exit 2; }
 fi
 
-WORK="$(mktemp -d -t ts-crap-smoke-XXXXXX)"
+WORK="$(mktemp -d -t ts-anti-patterns-smoke-XXXXXX)"
 PROJ="$WORK/project"
 # ARTIFACT_DIR override lets CI route artifacts into a known location so the
 # upload step can find them after a failing run. Defaults to a sibling of the
@@ -117,14 +117,14 @@ else
   warn "No coverage generated - will run in CC-only mode"
 fi
 
-# --- Run ts-crap in every format -------------------------------------------
+# --- Run ts-anti-patterns in every format -------------------------------------------
 
 run_format() {
   local fmt="$1"
   local out_name="$2"
   local extra="${3:-}"
   local out_path="$ARTIFACTS/$out_name"
-  log "ts-crap --format $fmt $extra"
+  log "ts-anti-patterns --format $fmt $extra"
   # shellcheck disable=SC2086
   if node "$TS_CRAP_BIN" . --format "$fmt" --output "$out_path" $extra 2>"$ARTIFACTS/$fmt.stderr"; then
     ok "$fmt → $(wc -c < "$out_path" | tr -d ' ') bytes at $out_path"
@@ -166,7 +166,7 @@ if command -v node >/dev/null && [ -f "$TS_CRAP_ROOT/schemas/report-v1.json" ]; 
     else { console.error('  schema FAIL:', JSON.stringify(validate.errors, null, 2)); process.exit(1); }
   " && ok "JSON envelope conforms to report-v1" || { fail "Schema validation failed"; OVERALL_FAIL=1; }
 else
-  warn "ajv not installed at the ts-crap root - skipping schema validation"
+  warn "ajv not installed at the ts-anti-patterns root - skipping schema validation"
 fi
 
 # --- Summary ----------------------------------------------------------------

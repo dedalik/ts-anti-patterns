@@ -1,8 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://raw.githubusercontent.com/dedalik/ts-crap/main/schemas/delta-v1.json",
-  "title": "ts-crap delta",
-  "description": "Per-function diff between two report-v1 envelopes, as emitted by `ts-crap --baseline ... --format json` (planned for 1.x). One row per matched/added/removed function plus an aggregate summary.",
+  "$id": "https://raw.githubusercontent.com/dedalik/ts-anti-patterns/main/schemas/delta-v1.json",
+  "title": "ts-anti-patterns delta",
+  "description": "Per-function diff between two report-v1 envelopes, as emitted by `ts-anti-patterns --baseline ... --format json` (planned for 1.x). One row per matched/added/removed function plus an aggregate summary.",
   "type": "object",
   "required": ["$schema", "schemaVersion", "summary", "rows"],
   "additionalProperties": false,

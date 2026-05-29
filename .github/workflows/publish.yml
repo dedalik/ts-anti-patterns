@@ -2,7 +2,7 @@ name: Publish to npm
 
 # Publishes when you push a version tag (e.g. v1.0.0). Tag must match package.json.
 # First release: publish once locally (`npm login` + `npm publish`), then configure Trusted
-# Publisher on npm for dedalik/ts-crap / workflow publish.yml. Remove CRAP_TOKEN if set.
+# Publisher on npm for dedalik/ts-anti-patterns / workflow publish.yml. Remove CRAP_TOKEN if set.
 # npm Classic tokens are gone; granular tokens often require OTP (EOTP) in CI unless bypass is enabled.
 
 on:
@@ -17,7 +17,7 @@ permissions:
 
 jobs:
   publish:
-    name: Publish ts-crap to npm
+    name: Publish ts-anti-patterns to npm
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4

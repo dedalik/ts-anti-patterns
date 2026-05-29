@@ -1,9 +1,9 @@
 // Config-file loading via cosmiconfig.
 // Discovery walks up from CWD looking for any of:
-//   - package.json     ("ts-crap" key)
-//   - .ts-crap.json
-//   - .ts-crap.yaml / .yml
-//   - ts-crap.config.{js,cjs,mjs,ts,json}
+//   - package.json     ("ts-anti-patterns" key)
+//   - .ts-anti-patterns.json
+//   - .ts-anti-patterns.yaml / .yml
+//   - ts-anti-patterns.config.{js,cjs,mjs,ts,json}
 //
 // CLI flags override config. Unknown keys are reported but not fatal - we
 // don't want a typo to wedge CI.
@@ -54,16 +54,16 @@ const KNOWN_KEYS = new Set<keyof ResolvedOptions>([
 ])
 
 export async function loadConfig(searchFrom?: string): Promise<ConfigDiscovery> {
-  const explorer = cosmiconfig("ts-crap", {
+  const explorer = cosmiconfig("ts-anti-patterns", {
     searchPlaces: [
       "package.json",
-      ".ts-crap.json",
-      ".ts-crap.yaml",
-      ".ts-crap.yml",
-      "ts-crap.config.json",
-      "ts-crap.config.js",
-      "ts-crap.config.cjs",
-      "ts-crap.config.mjs",
+      ".ts-anti-patterns.json",
+      ".ts-anti-patterns.yaml",
+      ".ts-anti-patterns.yml",
+      "ts-anti-patterns.config.json",
+      "ts-anti-patterns.config.js",
+      "ts-anti-patterns.config.cjs",
+      "ts-anti-patterns.config.mjs",
     ],
   })
 

@@ -1,8 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://raw.githubusercontent.com/dedalik/ts-crap/main/schemas/report-v1.json",
-  "title": "ts-crap report",
-  "description": "Versioned JSON envelope produced by `ts-crap --format json`. Stable for the lifetime of the 1.x schema family - additive changes only.",
+  "$id": "https://raw.githubusercontent.com/dedalik/ts-anti-patterns/main/schemas/report-v1.json",
+  "title": "ts-anti-patterns report",
+  "description": "Versioned JSON envelope produced by `ts-anti-patterns --format json`. Stable for the lifetime of the 1.x schema family - additive changes only.",
   "type": "object",
   "required": ["$schema", "schemaVersion", "meta", "summary", "entries"],
   "additionalProperties": false,
@@ -31,7 +31,7 @@
       "required": ["version", "generatedAt", "node", "cwd", "command", "mode"],
       "additionalProperties": true,
       "properties": {
-        "version": { "type": "string", "description": "ts-crap version that produced the report." },
+        "version": { "type": "string", "description": "ts-anti-patterns version that produced the report." },
         "generatedAt": { "type": "string", "format": "date-time" },
         "node": { "type": "string", "description": "process.version of the producer." },
         "cwd": { "type": "string" },
@@ -117,7 +117,7 @@
         "line": { "type": "integer", "minimum": 1 },
         "localThreshold": {
           "type": ["number", "null"],
-          "description": "Per-function threshold from `// ts-crap-threshold N`, or null."
+          "description": "Per-function threshold from `// ts-anti-patterns-threshold N`, or null."
         },
         "mode": { "type": "string", "enum": ["crap", "cc"] },
         "score": { "type": "number", "minimum": 0 },

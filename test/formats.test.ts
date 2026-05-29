@@ -15,7 +15,7 @@ const META: ReportMeta = {
   generatedAt: "2026-05-26T12:00:00.000Z",
   node: "v22.0.0",
   cwd: "/proj",
-  command: "ts-crap src",
+  command: "ts-anti-patterns src",
   mode: "crap",
   coverageSource: {
     path: "coverage/lcov.info",
@@ -54,7 +54,7 @@ describe("renderMarkdown", () => {
   const md = renderMarkdown(ENTRIES, META, { threshold: 30 })
 
   it("starts with a heading and notes the mode", () => {
-    expect(md).toMatch(/^## ts-crap report - CRAP mode/m)
+    expect(md).toMatch(/^## ts-anti-patterns report - CRAP mode/m)
   })
 
   it("emits a GFM table with severity emoji", () => {
@@ -105,8 +105,8 @@ describe("renderSarif", () => {
   it("matches the SARIF 2.1.0 envelope", () => {
     expect(sarif.version).toBe("2.1.0")
     expect(sarif.$schema).toMatch(/sarif-2\.1\.0/)
-    expect(sarif.runs[0]!.tool.driver.name).toBe("ts-crap")
-    expect(sarif.runs[0]!.tool.driver.rules[0]!.id).toBe("ts-crap/score")
+    expect(sarif.runs[0]!.tool.driver.name).toBe("ts-anti-patterns")
+    expect(sarif.runs[0]!.tool.driver.rules[0]!.id).toBe("ts-anti-patterns/score")
   })
 
   it("maps severity → level (error → error, warning → warning, info → note)", () => {
@@ -126,7 +126,7 @@ describe("renderSarif", () => {
 describe("renderPrComment", () => {
   it("opens with the marker and a headline counts row", () => {
     const out = renderPrComment(ENTRIES, META, { threshold: 30 })
-    expect(out.startsWith("<!-- ts-crap-report -->")).toBe(true)
+    expect(out.startsWith("<!-- ts-anti-patterns-report -->")).toBe(true)
     expect(out).toContain("🔴 1 error")
     expect(out).toContain("🟠 1 warning")
     expect(out).toContain("Top")

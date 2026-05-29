@@ -1,7 +1,7 @@
 // GitHub Actions annotation format.
 //
 // One line per entry, of the form:
-//   ::warning file=src/foo.ts,line=12,title=ts-crap score 35.0 (warning)::
+//   ::warning file=src/foo.ts,line=12,title=ts-anti-patterns score 35.0 (warning)::
 //     foo (CC 8, cov 30%) - hint text
 //
 // Severity → log level mapping:
@@ -47,7 +47,7 @@ export function renderGithub(
       `file=${e.file}`,
       `line=${e.line}`,
       `endLine=${e.endLine}`,
-      `title=ts-crap score ${e.score.toFixed(1)} (${e.severity})`,
+      `title=ts-anti-patterns score ${e.score.toFixed(1)} (${e.severity})`,
     ].join(",")
     const summary = buildMessage(e)
     lines.push(`::${level} ${props}::${encodeMessage(summary)}`)

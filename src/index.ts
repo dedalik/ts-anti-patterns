@@ -1,8 +1,8 @@
 // Programmatic API.
 //
-// Use this when you want ts-crap as a library:
+// Use this when you want ts-anti-patterns as a library:
 //
-//   import { analyze, renderHtml } from "ts-crap"
+//   import { analyze, renderHtml } from "ts-anti-patterns"
 //   const { entries, meta } = await analyze({ paths: ["src"], threshold: 30 })
 //   const html = await renderHtml(entries, meta, { threshold: 30 })
 //
@@ -110,7 +110,7 @@ export async function analyze(opts: AnalyzeOptions = {}): Promise<AnalyzeResult>
     generatedAt: new Date().toISOString(),
     node: process.version,
     cwd: process.cwd(),
-    command: "ts-crap (programmatic)",
+    command: "ts-anti-patterns (programmatic)",
     mode: coverage ? "crap" : "cc",
     coverageSource: coverage
       ? {
