@@ -68,7 +68,7 @@ ts-anti-patterns/
 ├── test/
 ├── schemas/report-v1.json, schemas/delta-v1.json
 ├── examples/               # GitHub Actions, lefthook
-└── scripts/smoke-real.sh
+└── scripts/copy-assets.mjs
 ```
 
 ## Core types

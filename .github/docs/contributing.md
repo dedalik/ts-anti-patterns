@@ -25,7 +25,6 @@ node dist/cli.js ./src --threshold 30
 | Unit | complexity, cognitive, pragmas, score, merge, lcov, coverage formats, hints, delta, formats, html (JSDOM) |
 | Property | CC monotonicity (`fast-check`) |
 | E2E | CLI paths, coverage, fail-above, formats, skill subcommands |
-| Integration | `scripts/smoke-real.sh` on pinned external repos (nightly / manual) |
 
 Schemas in `schemas/report-v1.json` and `schemas/delta-v1.json` are a public contract - prefer additive changes after 1.x.
 
