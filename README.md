@@ -1,14 +1,44 @@
 # ts-anti-patterns
 
-The **CRAP** (Change Risk Anti-Patterns) metric for TypeScript and JavaScript projects.
+## Token-Aware Refactoring for AI Agents
 
-Combines cyclomatic complexity and test coverage into a single score that highlights functions that are both complex and poorly tested - where bugs love to hide.
+Every file an agent reads costs tokens. On a 500-file TSX codebase that adds up
+to millions of input tokens before a single line changes.
+`ts-anti-patterns` cuts that bill: it ranks the riskiest functions first so the
+agent opens only what matters - not the whole tree.
+
+### The math
+
+> Sample: 300 TSX components averaged ~10k tokens/file (~1 token per 3.2–3.5 chars).
+
+| Approach | Input (≈) | vs. full read |
+|---|---|---|
+| Read all 500 files | 5M | - |
+| ts-anti-patterns report → pick targets | ~60k | **83× less** |
+| Report + 20 worst files (whole) | ~260k | **19× less** |
+| Report + 20 function slices (`file:line`) | ~90k | **55× less** |
+
+One function slice ≈ 1.5k tokens. Fat components can hit 30k+ each -
+CRAP score finds the hotspot inside, line count doesn't.
+
+### Why run it before an agent pass
+
+- **Spend tokens on complexity, not volume** - fix ranked hotspots, not 500 full files
+- **Precise entry points** - `file:line` lets the agent read a 1.5k-token slice, not a 30k-token component
+- **Machine-readable output** - JSON / Markdown / HTML parsed before the agent opens a single file
+
+### What is CRAP?
+
+**Change Risk Anti-Patterns** combines cyclomatic complexity with test coverage into one score -
+high CRAP = high complexity + low coverage = exactly where bugs hide.
 
 ```
 CRAP(m) = comp(m)² × (1 − cov(m)/100)³ + comp(m)
 ```
 
 When no coverage data is provided, `ts-anti-patterns` falls back to a CC-only mode and uses cyclomatic complexity as the score.
+
+![HTML report](./docs/img.png)
 
 ## Install
 
@@ -297,7 +327,7 @@ Discovered via cosmiconfig in this order: `.ts-anti-patterns.json`, `.ts-anti-pa
 
 CLI flags always override the config.
 
-[`cargo-crap`](https://github.com/minikin/cargo-crap) — Rust implementation of the CRAP metric.
+[`cargo-crap`](https://github.com/minikin/cargo-crap) - Rust implementation of the CRAP metric.
 
 ## License
 
