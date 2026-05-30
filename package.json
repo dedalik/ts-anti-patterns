@@ -1,6 +1,6 @@
 {
   "name": "ts-anti-patterns",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "CRAP (Change Risk Anti-Patterns) for TypeScript/JavaScript - inspired by minikin/cargo-crap",
   "type": "module",
   "license": "MIT",
@@ -48,7 +48,8 @@
     "dist/**/*.html",
     "dist/**/*.css",
     "schemas/*.json",
-    "README.md"
+    "README.md",
+    "docs/img.png"
   ],
   "scripts": {
     "build": "tsc -p tsconfig.build.json && node scripts/copy-assets.mjs && chmod +x dist/cli.js 2>/dev/null || true",
