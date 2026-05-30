@@ -13,13 +13,29 @@ agent opens only what matters - not the whole tree.
 
 | Approach | Input (≈) | vs. full read |
 |---|---|---|
-| Read all 500 files | 5M | - |
-| ts-anti-patterns report → pick targets | ~60k | **83× less** |
-| Report + 20 worst files (whole) | ~260k | **19× less** |
-| Report + 20 function slices (`file:line`) | ~90k | **55× less** |
+| Read all 500 files | 5M | 💰 baseline |
+| ts-anti-patterns report → pick targets | ~60k | **83× less** 💰 |
+| Report + 20 worst files (whole) | ~260k | **19× less** 💰 |
+| Report + 20 function slices (`file:line`) | ~90k | **55× less** 💰 |
 
 One function slice ≈ 1.5k tokens. Fat components can hit 30k+ each -
 CRAP score finds the hotspot inside, line count doesn't.
+
+### Claude Code cost & profit
+
+Claude Code meters the same tokens as the API. **Claude Sonnet 4.6** (typical coding model):
+**$3 / MTok input**, **$15 / MTok output** - [Anthropic pricing](https://platform.claude.com/docs/en/about-claude/pricing).
+
+**Input cost for the 500-file pass** (output not included - refactor replies add on top):
+
+| Approach | Input | Cost (≈) | Saved vs full read |
+|---|---:|---:|---:|
+| Read all 500 files | 5M | **$15.00** | - |
+| ts-anti-patterns report → pick targets | ~60k | **$0.18** | **$14.82** 💰 |
+| Report + 20 worst files (whole) | ~260k | **$0.78** | **$14.22** 💰 |
+| Report + 20 function slices (`file:line`) | ~90k | **$0.27** | **$14.73** 💰 |
+
+**Profit:** one scouting pass with `ts-anti-patterns` instead of reading every file keeps **~$15 in input cost** on the table above - before you pay for a single line of agent output. On a **10-pass refactor** that's **~$150** of input you never burn just finding where to start.
 
 ### Why run it before an agent pass
 
